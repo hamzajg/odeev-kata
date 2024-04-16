@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  openapi-generator-online:
+    image: openapitools/openapi-generator-online
+    ports:
+      - "8080:8080"
