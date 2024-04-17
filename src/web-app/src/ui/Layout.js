@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
                                    aria-current="page">Home</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/projects" className={path === 'projects' ? activeLinkClass : inactiveLinkClass}>Projects</NavLink>
+                                <NavLink to="/projects" className={['projects', 'diagrams', 'board', 'generate'].includes(path) ? activeLinkClass : inactiveLinkClass}>Projects</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/teams" className={path === 'teams' ? activeLinkClass : inactiveLinkClass}>Teams</NavLink>
