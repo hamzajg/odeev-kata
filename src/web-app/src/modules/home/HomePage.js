@@ -1,41 +1,48 @@
-// HomePage.js
 import React from 'react';
-import { Button } from 'flowbite-react';
 
 const HomePage = () => {
     return (
-        <div>
-            <div className="py-5">
-                <h5 className="text-center">Welcome to my PoC solution for the Odeev Kata Challenge!</h5>
-                <h3 className="text-center">Solving the Problem of creating ang generating code with VSC Extension</h3>
-                <p className="text-center">Hi my name is Hamza Jguerim, am excited to present to my Proof of Concept solution for the Kata. I will provide an overview of the problem we aim to solve, discuss the challenges we'll face, outline potential solutions and trade-offs, and delve into the architecture of both the PoC and the resulting project.</p>
-            </div>
+        <div className="flex justify-between items-center p-4">
+            <div className="text-left">
+                <div className="py-5">
+                    <h1 className="h1">Welcome to my PoC solution for the Odeev Kata Challenge!</h1>
+                    <h3>Solving the Problem of creating ang generating code with VSC
+                        Extension</h3>
+                    <p>Hi my name is Hamza Jguerim, am excited to present to my Proof of Concept
+                        solution for the Kata. I will provide an overview of the problem we aim to solve, discuss the
+                        challenges we'll face, outline potential solutions and trade-offs, and delve into the
+                        architecture of both the PoC and the resulting project.</p>
+                </div>
 
-            <div className="py-5">
-                <h2 className="text-center">Problem to Solve</h2>
-                <p className="text-center">Describe the problem that the PoC aims to address. Highlight its significance and impact on stakeholders.</p>
-            </div>
+                <div className="text-left py-5">
+                    <h2>Problem to Solve</h2>
+                    <p>Describe the problem that the PoC aims to address. Highlight its
+                        significance and impact on stakeholders.</p>
+                </div>
 
-            <div className="py-5">
-                <h2 className="text-center">Challenges and Solutions</h2>
-                <p className="text-center">Discuss the challenges involved in solving the problem and outline potential solutions. Address any trade-offs that may need to be considered.</p>
-            </div>
+                <div className="text-left py-5">
+                    <h2>Challenges and Solutions</h2>
+                    <p>Discuss the challenges involved in solving the problem and outline
+                        potential solutions. Address any trade-offs that may need to be considered.</p>
+                </div>
 
-            <div className="py-5">
-                <h2 className="text-center">PoC Architecture</h2>
-                <p className="text-center">Provide an overview of the architecture chosen for the PoC. Discuss the reasoning behind the architecture choices and any technologies used.</p>
-            </div>
+                <div className="text-left py-5">
+                    <h2>PoC Architecture</h2>
+                    <p>Provide an overview of the architecture chosen for the PoC. Discuss the
+                        reasoning behind the architecture choices and any technologies used.</p>
+                </div>
 
-            <div className="py-5">
-                <h2 className="text-center">Generated Project Architecture</h2>
-                <p className="text-center">Once the PoC is complete, discuss the architecture of the resulting project. Highlight any changes or optimizations made based on the learnings from the PoC phase.</p>
-            </div>
-
-            <div className="py-5 text-center">
-                <Button variant="primary">Get Started</Button>
+                <div className="text-left py-5">
+                    <h2>Generated Project Architecture</h2>
+                    <p>Once the PoC is complete, discuss the architecture of the resulting
+                        project. Highlight any changes or optimizations made based on the learnings from the PoC
+                        phase.</p>
+                </div>
             </div>
         </div>
+
     );
+
 };
 
 export default HomePage;

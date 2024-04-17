@@ -4,6 +4,8 @@ import {Button, Card, Table, Tabs, FooterIcon, Progress, Badge, Label, Select, R
 import {ProjectContext} from "../projects/ProjectProvider";
 import {DiagramsContext} from "../diagrams/DiagramProvider";
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import SwaggerUI from 'swagger-ui-react';
+import 'swagger-ui-react/swagger-ui.css';
 
 const GeneratePage = () => {
     const { id } = useParams();
@@ -182,58 +184,84 @@ const GeneratePage = () => {
                         </div>
                     </div>
                     <div style={{width: '48%'}}>
-                        <div className="mb-4">
-                            <Label htmlFor="targetSolution" value="Target Solution">
-                                Target Solution
-                            </Label>
+                        <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Choose solution generation settings:
+                        </h5>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div style={{width: '48%'}}>
+                                <Label htmlFor="targetSolution">
+                                    Target Solution
+                                </Label>
 
-                            <div className="flex items-center gap-2">
-                                <Radio id="greenfield" name="targetSolution" value="Greenfield"/>
-                                <Label htmlFor="greenfield">Greenfield</Label>
+                                <div className="flex items-center gap-2">
+                                    <Radio id="greenfield" name="targetSolution" value="Greenfield"/>
+                                    <Label htmlFor="greenfield">Greenfield</Label>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Radio id="integration" name="targetSolution" value="Integration"/>
+                                    <Label htmlFor="integration">Integration</Label>
+                                </div>
                             </div>
+                            <div style={{width: '48%'}}>
+                                <Label htmlFor="targetIntegrationPlatform">
+                                    Target Integration Platform (Finance Domain)
+                                </Label>
 
-                            <div className="flex items-center gap-2">
-                                <Radio id="integration" name="targetSolution" value="Integration"/>
-                                <Label htmlFor="integration">Integration</Label>
+                                <div className="flex items-center gap-2">
+                                    <Radio id="oracle-ebs" name="targetIntegrationPlatform" value="Oracle EBS"/>
+                                    <Label htmlFor="oracle-ebs">Oracle EBS</Label>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Radio id="sap" name="targetIntegrationPlatform" value="SAP"/>
+                                    <Label htmlFor="sap">SAP</Label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div style={{width: '48%'}}>
+                                <Label htmlFor="targetPlatform">
+                                    Target Platform
+                                </Label>
+
+                                <div className="flex items-center gap-2">
+                                    <Radio id="jvm" name="targetPlatform" value="JVM"/>
+                                    <Label htmlFor="jvm">JVM</Label>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Radio id="dot-net" name="targetPlatform" value=".NET"/>
+                                    <Label htmlFor="dot-net">.NET</Label>
+                                </div>
+                            </div>
+                            <div style={{width: '48%'}}>
+                                <Label htmlFor="targetLanguage">
+                                    Target Language
+                                </Label>
+
+                                <div className="flex items-center gap-2">
+                                    <Radio id="java" name="targetLanguage" value="Java"/>
+                                    <Label htmlFor="java">Java</Label>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <Radio id="kotlin" name="targetLanguage" value="Kotlin"/>
+                                    <Label htmlFor="kotlin">Kotlin</Label>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Radio id="c-sharp" name="targetLanguage" value="C#"/>
+                                    <Label htmlFor="c-sharp">C#</Label>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Radio id="f-sharp" name="targetLanguage" value="F#"/>
+                                    <Label htmlFor="f-sharp">F#</Label>
+                                </div>
                             </div>
                         </div>
                         <div className="mb-4">
-                            <Label htmlFor="targetPlatform" value="Target Platform">
-                                Target Platform
-                            </Label>
 
-                            <div className="flex items-center gap-2">
-                                <Radio id="jvm" name="targetPlatform" value="JVM"/>
-                                <Label htmlFor="jvm">JVM</Label>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <Radio id="dot-net" name="targetPlatform" value=".NET"/>
-                                <Label htmlFor="dot-net">.NET</Label>
-                            </div>
-                        </div>
-                        <div className="mb-4">
-                            <Label htmlFor="targetLanguage" value="Target Language">
-                                Target Language
-                            </Label>
-
-                            <div className="flex items-center gap-2">
-                                <Radio id="java" name="targetLanguage" value="Java"/>
-                                <Label htmlFor="java">Java</Label>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <Radio id="kotlin" name="targetLanguage" value="Kotlin"/>
-                                <Label htmlFor="kotlin">Kotlin</Label>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Radio id="c-sharp" name="targetLanguage" value="C#"/>
-                                <Label htmlFor="c-sharp">C#</Label>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <Radio id="f-sharp" name="targetLanguage" value="F#"/>
-                                <Label htmlFor="f-sharp">F#</Label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -287,14 +315,24 @@ const GeneratePage = () => {
             </div>
                 <Tabs activeTab={activeTab} onTabChange={(index) => setActiveTab(index)}>
                     <Tabs.TabPanel title="Editor">
-                        <CodeEditor
-                            value={yamlValue}
-                            language="yaml"
-                            placeholder="Please enter OpenAPI Specification here."
-                            onChange={(evn) => setYAMLValue(evn.target.value)}
-                            padding={15}
-                            style={{ backgroundColor: "#f5f5f5", fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace'}}
-                        />
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div style={{width: '48%'}}>
+                                <CodeEditor
+                                    value={yamlValue}
+                                    language="yaml"
+                                    placeholder="Please enter OpenAPI Specification here."
+                                    onChange={(evn) => setYAMLValue(evn.target.value)}
+                                    padding={15}
+                                    style={{
+                                        backgroundColor: "#f5f5f5",
+                                        fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace'
+                                    }}
+                                />
+                            </div>
+                            <div style={{width: '48%'}}>
+                                <SwaggerUI spec={yamlValue} />
+                            </div>
+                        </div>
                     </Tabs.TabPanel>
                     <Tabs.TabPanel title="Revision/History">
                         <HistoryTab/>

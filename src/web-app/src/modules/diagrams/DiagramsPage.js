@@ -1,8 +1,9 @@
 import React, {useContext, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import {Button, ButtonGroup, Card, Modal, Select, Table, Textarea, TextInput} from "flowbite-react";
+import {Button, Card, Select, Table, Textarea, TextInput} from "flowbite-react";
 import {DiagramsContext} from "./DiagramProvider";
 import {ProjectContext} from "../projects/ProjectProvider";
+import Drawer from "../../ui/components/Drawer";
 
 const DiagramsPage = () => {
     const { id } = useParams(); // Extract project ID from URL params
@@ -86,86 +87,59 @@ const DiagramsPage = () => {
                 </Table.Body>
             </Table>
 
-            <Modal
-                show={showRightPanel}
-                onClose={() => setShowRightPanel(false)}
-                size="md"
-                popup={true}
-                position="fixed"
-                className={`
-          transition-all duration-300 ease-in-out
-          fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-gray-800 shadow-lg
-          ${showRightPanel
-                    ? 'translate-x-0'
-                    : 'translate-x-full'
-                }
-          right-0
-          transform
-          translate-x-full
-          md:translate-x-0
-        `}
-            >
-                <div className="h-full flex flex-col">
-                    <Modal.Header>
-                        <h5 className="text-xl font-semibold text-gray-500 dark:text-white">
-                            Create Diagram
-                        </h5>
-                    </Modal.Header>
-                    <Modal.Body className="flex-grow overflow-y-auto">
-                        <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
-                            <div>
-                                <div className="mb-2 block">
-                                    <label htmlFor="diagramName"
-                                           className="text-sm font-medium text-gray-900 dark:text-white">
-                                        Diagram Name
-                                    </label>
-                                </div>
-                                <TextInput
-                                    id="diagramName"
-                                    placeholder="Enter diagram name"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    required={true}
-                                />
-                            </div>
-                            <div>
-                                <div className="mb-2 block">
-                                    <label htmlFor="diagramDescription"
-                                           className="text-sm font-medium text-gray-900 dark:text-white">
-                                        Diagram Description
-                                    </label>
-                                </div>
-                                <Textarea
-                                    id="diagramDescription"
-                                    placeholder="Enter diagram description"
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({...formData, description: e.target.value})}
-                                    rows={3}
-                                    required={true}
-                                />
-                            </div>
-                            <div>
-                                <div className="mb-2 block">
-                                    <label htmlFor="diagramType"
-                                           className="text-sm font-medium text-gray-900 dark:text-white">
-                                        Diagram Type
-                                    </label>
-                                </div>
-                                <Select id="diagramType" value={formData.type}
-                                        onChange={(e) => setFormData({...formData, type: e.target.value})}>
-                                    <option value="event-storming-big-picture">Event Storming Big Picture</option>
-                                    <option value="event-storming-design-level">Event Storming Design Level</option>
-                                    <option value="event-modeling">Event Modeling</option>
-                                    <option value="specification-by-example">Specification by Example</option>
-                                </Select>
-                            </div>
-                            <div className="w-full">
-                                <Button type="submit">Create Diagram</Button>
-                            </div>
-                        </form>
-                    </Modal.Body>
-                </div>
-            </Modal>
+            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Diagram">
+                <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+                    <div>
+                        <div className="mb-2 block">
+                            <label htmlFor="diagramName"
+                                   className="text-sm font-medium text-gray-900 dark:text-white">
+                                Diagram Name
+                            </label>
+                        </div>
+                        <TextInput
+                            id="diagramName"
+                            placeholder="Enter diagram name"
+                            value={formData.name}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
+                            required={true}
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <label htmlFor="diagramDescription"
+                                   className="text-sm font-medium text-gray-900 dark:text-white">
+                                Diagram Description
+                            </label>
+                        </div>
+                        <Textarea
+                            id="diagramDescription"
+                            placeholder="Enter diagram description"
+                            value={formData.description}
+                            onChange={(e) => setFormData({...formData, description: e.target.value})}
+                            rows={3}
+                            required={true}
+                        />
+                    </div>
+                    <div>
+                        <div className="mb-2 block">
+                            <label htmlFor="diagramType"
+                                   className="text-sm font-medium text-gray-900 dark:text-white">
+                                Diagram Type
+                            </label>
+                        </div>
+                        <Select id="diagramType" value={formData.type}
+                                onChange={(e) => setFormData({...formData, type: e.target.value})}>
+                            <option value="event-storming-big-picture">Event Storming Big Picture</option>
+                            <option value="event-storming-design-level">Event Storming Design Level</option>
+                            <option value="event-modeling">Event Modeling</option>
+                            <option value="specification-by-example">Specification by Example</option>
+                        </Select>
+                    </div>
+                    <div className="w-full">
+                        <Button type="submit">Create Diagram</Button>
+                    </div>
+                </form>
+            </Drawer>
         </div>
     );
 };

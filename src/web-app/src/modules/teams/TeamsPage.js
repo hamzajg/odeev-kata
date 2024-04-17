@@ -1,51 +1,54 @@
 import React, {useContext, useState} from 'react';
 import {Button, Table, Select, TextInput, Textarea} from 'flowbite-react';
-import {ProjectContext} from "./ProjectProvider";
 import Drawer from "../../ui/components/Drawer";
+import {TeamContext} from "./TeamsProvider";
 
-const ProjectsPage = () => {
+const TeamsPage = () => {
     const [showRightPanel, setShowRightPanel] = useState(false);
-    const { addProject, projects } = useContext(ProjectContext);
-    const [formData, setFormData] = useState({id: '', name: '', description: '', tags: '', teamMembers: []});
+    const { addTeam, teams } = useContext(TeamContext);
+    const [formData, setFormData] = useState({id: '', name: '', description: '', guild: '', members: []});
 
-    const handleAddProject = () => {
+    const handleAddTeam = () => {
         setShowRightPanel(true);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('Form submitted:', formData);
-        addProject(formData);
-        setFormData({id: '', name: '', description: '', tags: '', teamMembers: []});
+        addTeam(formData);
+        setFormData({id: '', name: '', description: '', guild: '', members: []});
         setShowRightPanel(false);
     };
 
     return (
         <div className="p-6">
             <div className="flex justify-between mb-4">
-                <h1 className="text-2xl font-bold">Projects</h1>
-                <Button color="blue" onClick={handleAddProject}>Add Project</Button>
-            </div>
+                <h1 className="text-2xl font-bold">Teams</h1>
+                <button type="button"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                        onClick={handleAddTeam}>Add Team
+                </button>
 
-            <Table>
+            </div>
+            <Table hoverable>
                 <Table.Head>
-                    <Table.HeadCell>Project name</Table.HeadCell>
+                    <Table.HeadCell>Team name</Table.HeadCell>
                     <Table.HeadCell>Description</Table.HeadCell>
-                    <Table.HeadCell>Tags</Table.HeadCell>
-                    <Table.HeadCell>Teams</Table.HeadCell>
+                    <Table.HeadCell>Tribe/Guild</Table.HeadCell>
+                    <Table.HeadCell>Members</Table.HeadCell>
                     <Table.HeadCell>
                         <span className="sr-only">Edit</span>
                         <span className="sr-only">Remove</span>
                     </Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                    {projects.map((project, index) => (
+                    {teams.map((team, index) => (
                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={index}>
                             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                <a href={"projects/" + project.id + "/diagrams"}> {project.name} </a></Table.Cell>
-                            <Table.Cell>{project.description}</Table.Cell>
-                            <Table.Cell>{project.tags}</Table.Cell>
-                            <Table.Cell>{project.teamMembers}</Table.Cell>
+                                {team.name} </Table.Cell>
+                            <Table.Cell>{team.description}</Table.Cell>
+                            <Table.Cell>{team.guild}</Table.Cell>
+                            <Table.Cell>{team.members}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex flex-wrap gap-2">
                                     <Button color="blue">Edit</Button>
@@ -58,7 +61,7 @@ const ProjectsPage = () => {
                 </Table.Body>
             </Table>
 
-            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Project">
+            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Team">
                 <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
                     <div>
                         <div className="mb-2 block">
@@ -109,9 +112,12 @@ const ProjectsPage = () => {
                                 Project Teams
                             </label>
                         </div>
-                        <Select id="projectTeams" value={formData.teamMembers}
+                        <Select
+                            id="projectTeams"
+                            value={formData.teamMembers}
                             onChange={(e) => setFormData({ ...formData, teamMembers: e.target.value })}
-                            multiple={true} >
+                            multiple={true}
+                        >
                             <option value="team1">Team 1</option>
                             <option value="team2">Team 2</option>
                             <option value="team3">Team 3</option>
@@ -126,4 +132,4 @@ const ProjectsPage = () => {
     );
 };
 
-export default ProjectsPage;
+export default TeamsPage;

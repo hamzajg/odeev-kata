@@ -7,11 +7,11 @@ import ReactFlow, {
     Background,
     useEdgesState,
     useNodesState,
-    Position, Handle
+    Position
 } from 'react-flow-renderer';
 import PaletteItem from "./components/PaletteItem";
 import {v4 as uuidv4} from "uuid";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import CustomNode from "./components/CustomNode";
 import AIChatDialog from "./components/AIChatDialog";
 import {BoardsContext} from "./BoardProvider";

@@ -1,6 +1,5 @@
-
-import {useEdgesState, useNodesState} from 'react-flow-renderer';
 import {Tooltip} from "flowbite-react";
+
 const PaletteItem = ({ label, color, id, onDoubleClick }) => {
     return (
         <div
