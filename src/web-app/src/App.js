@@ -8,6 +8,7 @@ import DiagramsPage from "./modules/diagrams/DiagramsPage";
 import BoardPage from "./modules/board/BoardPage";
 import GeneratePage from "./modules/generate/GeneratePage";
 import TeamsPage from "./modules/teams/TeamsPage";
+import FrameworkHubPage from "./modules/framework/FrameworkHubPage";
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                         <Route path="/projects/:id/diagrams" element={<DiagramsPage/>}/>
                         <Route path="/projects/:id/diagrams/:id/board" element={<BoardPage/>}/>
                         <Route path="/projects/:id/generate" element={<GeneratePage/>}/>
+                        <Route path="/framework-hub" element={<FrameworkHubPage/>}/>
                     </Routes>
                 </ModulesProvider>
             </Layout>

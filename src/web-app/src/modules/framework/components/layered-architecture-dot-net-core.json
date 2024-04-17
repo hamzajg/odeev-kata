@@ -1,0 +1,103 @@
+{
+  "name": "layered-architecture-solution-dot-net",
+  "children": [
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "ProjectName",
+          "children": [
+            {
+              "name": "Controllers",
+              "children": [
+                {
+                  "name": "HomeController.cs"
+                }
+              ]
+            },
+            {
+              "name": "Services",
+              "children": [
+                {
+                  "name": "HomeService.cs"
+                }
+              ]
+            },
+            {
+              "name": "Repositories",
+              "children": [
+                {
+                  "name": "HomeRepository.cs"
+                }
+              ]
+            },
+            {
+              "name": "Models",
+              "children": [
+                {
+                  "name": "HomeModel.cs"
+                }
+              ]
+            },
+            {
+              "name": "Views",
+              "children": [
+                {
+                  "name": "Index.cshtml"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "children": [
+        {
+          "name": "ProjectName.Tests",
+          "children": [
+            {
+              "name": "Controllers",
+              "children": [
+                {
+                  "name": "HomeControllerTests.cs"
+                }
+              ]
+            },
+            {
+              "name": "Services",
+              "children": [
+                {
+                  "name": "HomeServiceTests.cs"
+                }
+              ]
+            },
+            {
+              "name": "Repositories",
+              "children": [
+                {
+                  "name": "HomeRepositoryTests.cs"
+                }
+              ]
+            },
+            {
+              "name": "Models",
+              "children": [
+                {
+                  "name": "HomeModelTests.cs"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ProjectName.sln"
+    },
+    {
+      "name": "README.md"
+    }
+  ]
+}

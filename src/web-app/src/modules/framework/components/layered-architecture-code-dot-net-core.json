@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Program.cs",
+    "content": "using System;\n\nnamespace ProjectName\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            Console.WriteLine(\"Hello, world!\");\n        }\n    }\n}"
+  },
+  {
+    "name": "HomeController.cs",
+    "content": "using Microsoft.AspNetCore.Mvc;\n\nnamespace ProjectName.Controllers\n{\n    [Route(\"/\")]\n    [ApiController]\n    public class HomeController : ControllerBase\n    {\n        [HttpGet]\n        public IActionResult Index()\n        {\n            return Ok(\"index\");\n        }\n    }\n}"
+  },
+  {
+    "name": "HomeService.cs",
+    "content": "namespace ProjectName.Services\n{\n    public class HomeService\n    {\n        public string GetMessage()\n        {\n            return \"Hello from the service!\";\n        }\n    }\n}"
+  },
+  {
+    "name": "HomeRepository.cs",
+    "content": "namespace ProjectName.Repositories\n{\n    public class HomeRepository\n    {\n        public string FetchData()\n        {\n            return \"Data from repository\";\n        }\n    }\n}"
+  },
+  {
+    "name": "HomeModel.cs",
+    "content": "namespace ProjectName.Models\n{\n    public class HomeModel\n    {\n        public string Data { get; set; }\n    }\n}"
+  },
+  {
+    "name": "HomeControllerTest.cs",
+    "content": "using Xunit;\nusing ProjectName.Controllers;\n\nnamespace ProjectName.Tests.Controllers\n{\n    public class HomeControllerTest\n    {\n        [Fact]\n        public void TestIndex()\n        {\n            var controller = new HomeController();\n            var result = controller.Index() as OkObjectResult;\n            Assert.Equal(\"index\", result.Value);\n        }\n    }\n}"
+  },
+  {
+    "name": "HomeServiceTest.cs",
+    "content": "using Xunit;\nusing ProjectName.Services;\n\nnamespace ProjectName.Tests.Services\n{\n    public class HomeServiceTest\n    {\n        [Fact]\n        public void TestGetMessage()\n        {\n            var service = new HomeService();\n            var message = service.GetMessage();\n            Assert.Equal(\"Hello from the service!\", message);\n        }\n    }\n}"
+  },
+  {
+    "name": "HomeRepositoryTest.cs",
+    "content": "using Xunit;\nusing ProjectName.Repositories;\n\nnamespace ProjectName.Tests.Repositories\n{\n    public class HomeRepositoryTest\n    {\n        [Fact]\n        public void TestFetchData()\n        {\n            var repository = new HomeRepository();\n            var data = repository.FetchData();\n            Assert.Equal(\"Data from repository\", data);\n        }\n    }\n}"
+  },
+  {
+    "name": "ProjectName.csproj",
+    "content": "<Project Sdk=\"Microsoft.NET.Sdk\">\n\n  <PropertyGroup>\n    <OutputType>Exe</OutputType>\n    <TargetFramework>netcoreapp3.1</TargetFramework>\n  </PropertyGroup>\n\n  <ItemGroup>\n    <PackageReference Include=\"Microsoft.AspNetCore.App\" />\n    <PackageReference Include=\"Microsoft.AspNetCore.Razor.Design\" Version=\"2.2.0\" PrivateAssets=\"All\" />\n  </ItemGroup>\n\n</Project>"
+  }
+]

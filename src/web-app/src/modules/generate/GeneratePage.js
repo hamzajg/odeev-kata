@@ -55,6 +55,7 @@ const GeneratePage = () => {
             <div className="flex justify-between mb-4">
                 <h1 className="text-2xl font-bold">Bottom Up Design</h1>
             </div>
+
             <Tabs activeTab={activeTab} onTabChange={(index) => setActiveTab(index)}>
                 <Tabs.TabPanel title="Boards">
                     <Table hoverable>

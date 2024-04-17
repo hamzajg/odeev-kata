@@ -1,0 +1,122 @@
+{
+  "name": "layered-architecture-solution-java",
+  "children": [
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "main",
+          "children": [
+            {
+              "name": "java",
+              "children": [
+                {
+                  "name": "com",
+                  "children": [
+                    {
+                      "name": "example",
+                      "children": [
+                        {
+                          "name": "ProjectName",
+                          "children": [
+                            {
+                              "name": "controller",
+                              "children": [
+                                {
+                                  "name": "HomeController.java"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "service",
+                              "children": [
+                                {
+                                  "name": "HomeService.java"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "repository",
+                              "children": [
+                                {
+                                  "name": "HomeRepository.java"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "resources",
+              "children": [
+                {
+                  "name": "application.properties"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "test",
+      "children": [
+        {
+          "name": "java",
+          "children": [
+            {
+              "name": "com",
+              "children": [
+                {
+                  "name": "example",
+                  "children": [
+                    {
+                      "name": "ProjectName",
+                      "children": [
+                        {
+                          "name": "controller",
+                          "children": [
+                            {
+                              "name": "HomeControllerTest.java"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "service",
+                          "children": [
+                            {
+                              "name": "HomeServiceTest.java"
+                            }
+                          ]
+                        },
+                        {
+                          "name": "repository",
+                          "children": [
+                            {
+                              "name": "HomeRepositoryTest.java"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "build.gradle"
+    },
+    {
+      "name": "settings.gradle"
+    }
+  ]
+}

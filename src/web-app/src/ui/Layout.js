@@ -28,7 +28,7 @@ const Layout = ({ children }) => {
                                 <NavLink to="/teams" className={path === 'teams' ? activeLinkClass : inactiveLinkClass}>Teams</NavLink>
                             </li>
                             <li>
-                                <NavLink href="/framework-hub" className={path === 'framework-hub' ? activeLinkClass : inactiveLinkClass}>Framework Hub</NavLink>
+                                <NavLink to="/framework-hub" className={path === 'framework-hub' ? activeLinkClass : inactiveLinkClass}>Framework Hub</NavLink>
                             </li>
                         </ul>
                     </div>

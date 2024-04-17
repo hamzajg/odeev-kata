@@ -1,0 +1,33 @@
+{
+  "name": "odeev-kata-poc-app-extension",
+  "description": "Odeev Kata PoC App VS Code Extension",
+  "version": "1.0.0",
+  "publisher": "Hamza Jguerim",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "activationEvents": [
+    "onCommand:odeev-kata-poc-app-extension.open"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "odeev-kata-poc-app-extension.open",
+        "title": "Open Odeev Kata PoC App"
+      }
+    ]
+  },
+  "scripts": {
+    "package": "vsce package",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "@types/vscode": "^1.73.0",
+    "typescript": "^5.4.2",
+    "vsce": "^2.15.0"
+  }
+}

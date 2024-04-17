@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Main.java",
+    "content": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, world!\");\n    }\n}"
+  },
+  {
+    "name": "HomeController.java",
+    "content": "public class HomeController {\n    public String index() {\n        return \"index\";\n    }\n}"
+  },
+  {
+    "name": "HomeService.java",
+    "content": "public class HomeService {\n    public String getMessage() {\n        return \"Hello from the service!\";\n    }\n}"
+  },
+  {
+    "name": "HomeRepository.java",
+    "content": "public class HomeRepository {\n    public String fetchData() {\n        return \"Data from repository\";\n    }\n}"
+  },
+  {
+    "name": "HomeModel.java",
+    "content": "public class HomeModel {\n    private String data;\n\n    public String getData() {\n        return data;\n    }\n\n    public void setData(String data) {\n        this.data = data;\n    }\n}"
+  },
+  {
+    "name": "HomeControllerTest.java",
+    "content": "public class HomeControllerTest {\n    @Test\n    public void testIndex() {\n        HomeController controller = new HomeController();\n        String result = controller.index();\n        assertEquals(\"index\", result);\n    }\n}"
+  },
+  {
+    "name": "HomeServiceTest.java",
+    "content": "public class HomeServiceTest {\n    @Test\n    public void testGetMessage() {\n        HomeService service = new HomeService();\n        String message = service.getMessage();\n        assertEquals(\"Hello from the service!\", message);\n    }\n}"
+  },
+  {
+    "name": "HomeRepositoryTest.java",
+    "content": "public class HomeRepositoryTest {\n    @Test\n    public void testFetchData() {\n        HomeRepository repository = new HomeRepository();\n        String data = repository.fetchData();\n        assertEquals(\"Data from repository\", data);\n    }\n}"
+  },
+  {
+    "name": "build.gradle",
+    "content": "plugins {\n    id 'java'\n}\n\nrepositories {\n    mavenCentral()\n}\n\ndependencies {\n    testImplementation 'junit:junit:4.13.1'\n}"
+  }
+]
