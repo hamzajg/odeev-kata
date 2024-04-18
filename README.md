@@ -8,9 +8,7 @@ practices that can be applied to the generated solutions project.
 Will try to present a Pragmatic and Evolutionary Solution Architecture, from integrating with existing tools, 
 custom Web App Tool, IDE Extension like (VSCode, JetBrains IDEs), console CLI commands tool.
 
-# IMPORTANT NOTE: Having Fun :) !!
-
-## Table of Content
+# IMPORTANT NOTE: Continuous Learning & Having Fun :)
 
 ## Introduction
 The solution is sort of integrated platform designed to provide a comprehensive development environment for building 
@@ -204,7 +202,6 @@ graph TD;
     end
 ```
 
-
 ## Architecture & Modeling
 The platform provide a comprehensive suite of modeling and diagramming tools, augmented by AI capabilities. 
 These tools empower teams to visualize complex systems, design intricate architectures, and map out intricate workflows with ease. 
@@ -248,10 +245,24 @@ graph TD;
         T1[Then: Order is shipped]
         style T1 fill:#e74c3c,stroke:#c0392b,stroke-width:2px
     end
-
 ```
 ### Top Down APIs Modeling
-using APIs design first by writing the Open API Specification yml file and use tool like Swagger to preview the APIs and Swagger code generation to generate the APIs
+using APIs design first by writing the Open API Specification yml file and use tool like Swagger to preview the APIs and Swagger code generation to generate the APIs.
+
+```mermaid
+graph TD;
+    subgraph Top Down Design OpenAPISpec
+        generateSpec[Write OpenAPI Specification]
+    end
+    
+    subgraph Platform
+        generateCode[Swagger Code Generation]
+        previewAPI[Swagger API Preview]
+    end
+
+    generateSpec --> generateCode
+    generateSpec --> previewAPI
+```
 
 ### Inspired By Existing tools:
 
