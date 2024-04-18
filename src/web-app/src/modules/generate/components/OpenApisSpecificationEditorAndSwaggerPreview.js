@@ -83,21 +83,29 @@ const OpenApisSpecificationEditorAndSwaggerPreview = () => {
     const handleSaveYAMLChange = async () => {
         const defaultPath = localStorage.getItem('workspace-path') + "/open-apis-specs.yml";
         const from = localStorage.getItem('from');
+        window.postMessage({type: "createFile", filePath: "/open-apis-specs.yml", fileContent: yamlValue}, '*');
         if(from) {
             var file = new File([yamlValue], defaultPath, {type: "text/plain;charset=utf-8"});
             saveAs(file);
         } else {
-            const opts = {
-                suggestedName: defaultPath
-            };
-            const handle = await window.showSaveFilePicker(opts);
-            const writableStream = await handle.createWritable();
-            await writableStream.write(yamlValue);
-            await writableStream.close();
+            try {
+                const opts = {
+                    suggestedName: defaultPath
+                };
+                const handle = await window.showSaveFilePicker(opts);
+                const writableStream = await handle.createWritable();
+                await writableStream.write(yamlValue);
+                await writableStream.close();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('File save operation aborted by the user.');
+                } else {
+                    console.error('Error saving file:', error);
+                }
+            }
         }
-
-        setSavedTo(defaultPath);
     };
+
     return(
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <div style={{width: '48%'}}>

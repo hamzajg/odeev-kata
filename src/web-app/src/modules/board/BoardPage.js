@@ -85,17 +85,27 @@ function BoardPage() {
     const handleSaveDiagramAsCodeChange = async () => {
         const defaultPath = localStorage.getItem('workspace-path') + "/domain-context-"+ diagram.type +".json";
         const from = localStorage.getItem('from');
+        window.postMessage({type: "createFile", filePath: "/domain-context-"+ diagram.type +".json", fileContent: diagramCode}, '*');
+
         if(from) {
             var file = new File([diagramCode], defaultPath, {type: "text/plain;charset=utf-8"});
             saveAs(file);
         } else {
-            const opts = {
-                suggestedName: defaultPath
-            };
-            const handle = await window.showSaveFilePicker(opts);
-            const writableStream = await handle.createWritable();
-            await writableStream.write(diagramCode);
-            await writableStream.close();
+            try {
+                const opts = {
+                    suggestedName: defaultPath
+                };
+                const handle = await window.showSaveFilePicker(opts);
+                const writableStream = await handle.createWritable();
+                await writableStream.write(diagramCode);
+                await writableStream.close();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('File save operation aborted by the user.');
+                } else {
+                    console.error('Error saving file:', error);
+                }
+            }
         }
     };
 

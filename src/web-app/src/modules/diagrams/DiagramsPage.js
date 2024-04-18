@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {Button, Card, Select, Table, Textarea, TextInput} from "flowbite-react";
 import {DiagramsContext} from "./DiagramProvider";
 import {ProjectContext} from "../projects/ProjectProvider";
@@ -22,13 +22,9 @@ const DiagramsPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add logic to handle form submission (e.g., send data to backend)
         console.log('Form submitted:', formData);
-        // Add the new project to the projects list
         addDiagram(formData);
-        // Reset form data
         setFormData({id: '', projectId: id, name: '', description: '', type: ''});
-        // Close the drawer
         setShowRightPanel(false);
     };
 
@@ -76,7 +72,7 @@ const DiagramsPage = () => {
                             <Table.Cell>{diagram.updatedAt}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex flex-wrap gap-2">
-                                    <Button color="green"><a href={"/projects/" + diagram.projectId + "/diagrams/" + diagram.id + "/board"}>Board</a></Button>
+                                    <Button color="green"><Link to={"/projects/" + diagram.projectId + "/diagrams/" + diagram.id + "/board"}>Board</Link></Button>
                                     <Button color="blue">Edit</Button>
                                     <Button color="red">Remove</Button>
                                 </div>

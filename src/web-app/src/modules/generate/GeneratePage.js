@@ -13,12 +13,10 @@ const GeneratePage = () => {
     const { id } = useParams();
     const { findProjectById } = useContext(ProjectContext);
     const { findDiagramsByProjectId, addDiagram } = useContext(DiagramsContext);
-
     const navigate = useNavigate();
     const project = findProjectById(id)
     const projectDiagrams = findDiagramsByProjectId(id);
 
-    const [activeTab, setActiveTab] = useState(0);
     const [showRightPanel, setShowRightPanel] = useState(false);
     const [formData, setFormData] = useState({id: '', projectId: id, name: '', description: '', type: ''});
 
@@ -56,8 +54,8 @@ const GeneratePage = () => {
                 <h1 className="text-2xl font-bold">Bottom Up Design</h1>
             </div>
 
-            <Tabs activeTab={activeTab} onTabChange={(index) => setActiveTab(index)}>
-                <Tabs.TabPanel title="Boards">
+            <Tabs>
+                <Tabs.Item title="Boards">
                     <Table hoverable>
                         <Table.Head>
                             <Table.HeadCell>Diagram name</Table.HeadCell>
@@ -88,27 +86,27 @@ const GeneratePage = () => {
                             ))}
                         </Table.Body>
                     </Table>
-                </Tabs.TabPanel>
-                <Tabs.TabPanel title="Revision/History">
+                </Tabs.Item>
+                <Tabs.Item title="Revision/History">
                     <HistoryTab/>
-                </Tabs.TabPanel>
-                <Tabs.TabPanel title="Compare/Merge">
+                </Tabs.Item>
+                <Tabs.Item title="Compare/Merge">
                     <CompareTab/>
-                </Tabs.TabPanel>
+                </Tabs.Item>
             </Tabs>
             <div className="flex justify-between mb-4 mt-2">
                 <h1 className="text-2xl font-bold">Top Down Design</h1>
             </div>
-                <Tabs activeTab={activeTab} onTabChange={(index) => setActiveTab(index)}>
-                    <Tabs.TabPanel title="Editor">
+                <Tabs>
+                    <Tabs.Item title="Editor">
                         <OpenApisSpecificationEditorAndSwaggerPreview />
-                    </Tabs.TabPanel>
-                    <Tabs.TabPanel title="Revision/History">
+                    </Tabs.Item>
+                    <Tabs.Item title="Revision/History">
                         <HistoryTab/>
-                    </Tabs.TabPanel>
-                    <Tabs.TabPanel title="Compare/Merge">
+                    </Tabs.Item>
+                    <Tabs.Item title="Compare/Merge">
                         <CompareTab/>
-                    </Tabs.TabPanel>
+                    </Tabs.Item>
                 </Tabs>
         </div>
     );

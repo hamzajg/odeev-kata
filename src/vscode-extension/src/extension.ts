@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { Uri, WebviewPanel, WebviewOptions } from 'vscode';
+import * as fs from "fs";
 const workspaceFolders = vscode.workspace.workspaceFolders;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -17,36 +18,51 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
         'Odeev Kata PoC App',
         vscode.ViewColumn.Beside,
         {
-            enableScripts: true,
-            localResourceRoots: [Uri.joinPath(extensionUri, 'webview')]
+            enableScripts: true
         }
     );
 
-    panel.webview.html = getWebviewContent(extensionUri);
-
-    return panel;
-}
-
-function getWebviewContent(extensionUri: Uri): string {
+    let scriptSrc = panel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, "dist", "static", "js", "main.js"))
+    let cssSrc = panel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, "dist", "static", "css", "main.css"))
     let workspacePath = "";
     if (workspaceFolders) {
         workspacePath = workspaceFolders[0].uri.fsPath;
     }
+    // VSCode extension
+    panel.webview.onDidReceiveMessage(message => {
+        console.log('VSCODE Received data:', message);
 
-    return `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Odeev Kata PoC App</title>
-      <style> html, body {width: 100%; height: 100%}</style>
-    </head>
-    <body>
-      <iframe src="http://localhost:3000?workspace-path=${workspacePath}&from=vs-code" style="height:100%; width:100%"  width="100%" height="100%"></iframe>
-    </body>
-    </html>
-  `;
+        if (message && message.type === 'createFile' && message.fileContent) {
+            const fileContent = message.fileContent;
+            const filePath = message.filePath;
+            fs.writeFileSync(workspacePath + filePath, fileContent);
+            console.log('File saved successfully!');
+        } else {
+            console.error('No workspace opened in VS Code.');
+        }
+    });
+    panel.webview.html = `<!DOCTYPE html>
+        <html data-darkreader-mode="dynamic" data-darkreader-scheme="dark" lang="en">
+          <head>
+            <script defer src="${scriptSrc}"></script>
+            <link rel="stylesheet" href="${cssSrc}" />
+          </head>
+          <body>
+            <noscript>You need to enable JavaScript to run this app.</noscript>
+            <div id="root"></div>
+          </body>
+          <script>
+            window.postMessage("Init message", "*");    
+            const vscode = acquireVsCodeApi();
+            window.addEventListener('message', event => {
+              const message = event.data;
+                vscode.postMessage(message);
+            });
+           </script>
+        </html>
+        `;
+
+    return panel;
 }
 
 export function deactivate() {}

@@ -4,6 +4,7 @@ import {ProjectContext} from "./ProjectProvider";
 import Drawer from "../../ui/components/Drawer";
 import Multiselect from 'multiselect-react-dropdown';
 import {TeamContext} from "../teams/TeamsProvider";
+import {Link} from "react-router-dom";
 
 const ProjectsPage = () => {
     const [showRightPanel, setShowRightPanel] = useState(false);
@@ -45,7 +46,7 @@ const ProjectsPage = () => {
                     {projects.map((project, index) => (
                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={index}>
                             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                <a href={"projects/" + project.id + "/diagrams"}> {project.name} </a></Table.Cell>
+                                <Link to={"/projects/" + project.id + "/diagrams"}> {project.name} </Link></Table.Cell>
                             <Table.Cell>{project.description}</Table.Cell>
                             <Table.Cell>{project.tags.map(item => item.name + ", ")}</Table.Cell>
                             <Table.Cell>{project.teamMembers.map(item => item.name + ", ")}</Table.Cell>
