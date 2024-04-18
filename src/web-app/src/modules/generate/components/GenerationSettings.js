@@ -7,7 +7,7 @@ import {SolutionContext} from "../../solutions/SolutionProvider";
 
 const GenerationSettings = ({ project }) => {
     const [settings, setSettings] = useState({});
-    const {handleSaveMetadata} = useContext(SolutionContext);
+    const {handleSaveMetadata, handleGenerateProject} = useContext(SolutionContext);
 
     return (
         <>
@@ -26,7 +26,8 @@ const GenerationSettings = ({ project }) => {
                 </Tabs.Item>
             </Tabs>
 
-            <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
+            <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}} className="gap-2">
+                <Button onClick={e => handleGenerateProject(project, settings)}>Generate</Button>
                 <Button onClick={e => handleSaveMetadata(project, settings)}>Save Metadata</Button>
             </div>
         </>

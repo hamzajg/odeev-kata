@@ -23,6 +23,17 @@ const SolutionProvider = ({ children }) => {
         return solutions.find(solution => solution.id === id);
     }
 
+    const handleGenerateProject = async (project, settings) => {
+        const metadata = {...project,
+            frameworkVersion: "1.0.0",
+            settings: settings,
+            openApiSpecFilePath: "open-apis-specs.yml",
+            domainEventModelFilePath: "domain-context-event-modeling.json",
+            domainSpecificationModelFilePath: "domain-context-specification-by-example.json",
+        }
+        const metadataContent = JSON.stringify(metadata, undefined, 2);
+        window.postMessage({type: "createProject", filePath: "/metadata.json", fileContent: metadataContent}, '*');
+    }
 
     const handleSaveMetadata = async (project, settings) => {
         const defaultPath = localStorage.getItem('workspace-path') + "/metadata.json";
@@ -61,7 +72,8 @@ const SolutionProvider = ({ children }) => {
         solutions,
         addSolution,
         findSolutionById,
-        handleSaveMetadata
+        handleSaveMetadata,
+        handleGenerateProject
     };
 
     return <SolutionContext.Provider value={value}>{children}</SolutionContext.Provider>;

@@ -36,6 +36,11 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
             const filePath = message.filePath;
             fs.writeFileSync(workspacePath + filePath, fileContent);
             console.log('File saved successfully!');
+        } else if (message && message.type === 'createProject' && message.fileContent) {
+            const fileContent = message.fileContent;
+            const filePath = message.filePath;
+            fs.writeFileSync(workspacePath + filePath, fileContent);
+            console.log('File saved successfully!');
         } else {
             console.error('No workspace opened in VS Code.');
         }

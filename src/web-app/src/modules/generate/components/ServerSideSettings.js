@@ -1,4 +1,4 @@
-import {Label, Radio} from "flowbite-react";
+import {Checkbox, Label, Radio} from "flowbite-react";
 import React from "react";
 
 const ServerSideSettings = ({settings, setSettings}) => <>
@@ -58,7 +58,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="dot-net">.NET</Label>
             </div>
         </div>
-        <div style={{width: '48%'}}>
+        {settings.targetPlatform && <div style={{width: '48%'}}>
             <Label htmlFor="targetLanguage">
                 Target Language
             </Label>
@@ -86,6 +86,49 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                     <Label htmlFor="f-sharp">F#</Label>
                 </div>
             </>}
+        </div>}
+    </div>
+
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{width: '48%'}}>
+            <Label htmlFor="targetLanguageStyle">
+                Target Language Style
+            </Label>
+            <div className="flex items-center gap-2">
+                <Radio id="imperative" name="targetLanguageStyle" value="Imperative"
+                       onChange={e => setSettings({...settings, targetLanguageStyle: e.target.id})}/>
+                <Label htmlFor="imperative">Imperative</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Radio id="declarative" name="targetLanguageStyle" value="Declarative"
+                       onChange={e => setSettings({...settings, targetLanguageStyle: e.target.id})}/>
+                <Label htmlFor="declarative">Declarative</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Radio id="reactive" name="targetLanguageStyle" value="Reactive"
+                       onChange={e => setSettings({...settings, targetLanguageStyle: e.target.id})}/>
+                <Label htmlFor="reactive">Reactive</Label>
+            </div>
+        </div>
+        <div style={{width: '48%'}}>
+            <Label htmlFor="targetConcurrencyModel">
+                Target Concurrency Model
+            </Label>
+            <div className="flex items-center gap-2">
+                <Radio id="multithreading" name="targetConcurrencyModel" value="Multithreading"
+                       onChange={e => setSettings({...settings, targetConcurrencyModel: e.target.id})}/>
+                <Label htmlFor="multithreading">Multithreading</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Radio id="actor-model" name="targetConcurrencyModel" value="Actor Model"
+                       onChange={e => setSettings({...settings, targetConcurrencyModel: e.target.id})}/>
+                <Label htmlFor="actor-model">Actor Model</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Radio id="parallel" name="targetConcurrencyModel" value="Parallel"
+                       onChange={e => setSettings({...settings, targetConcurrencyModel: e.target.id})}/>
+                <Label htmlFor="parallel">Parallel</Label>
+            </div>
         </div>
     </div>
 
@@ -146,6 +189,14 @@ const ServerSideSettings = ({settings, setSettings}) => <>
             <Label htmlFor="targetCommunicationProtocol">
                 Target Communication Protocol
             </Label>
+            <div className="flex items-center gap-2">
+                <Radio id="object-method-call" name="targetCommunicationProtocol" value="Object Method Call"
+                       onChange={e => setSettings({
+                           ...settings,
+                           targetCommunicationProtocol: e.target.id
+                       })}/>
+                <Label htmlFor="object-method-call">Object Method Call</Label>
+            </div>
             <div className="flex items-center gap-2">
                 <Radio id="http" name="targetCommunicationProtocol" value="HTTP"
                        onChange={e => setSettings({
@@ -322,22 +373,54 @@ const ServerSideSettings = ({settings, setSettings}) => <>
         </div>
         <div style={{width: '48%'}}>
             <Label htmlFor="targetObservabilityOptions">
-                Target Observability Options
+                Target Observability / Proxy / Cache Options
             </Label>
             <div className="flex items-center gap-2">
-                <Radio id="monitoring" name="targetObservabilityOptions" value="Monitoring"
-                       onChange={e => setSettings({
-                           ...settings,
-                           targetObservabilityOptions: e.target.id
-                       })}/>
+                <Checkbox id="monitoring" name="targetObservabilityOptions" value="Monitoring"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
                 <Label htmlFor="monitoring">Monitoring</Label>
             </div>
             <div className="flex items-center gap-2">
-                <Radio id="health-check" name="targetObservabilityOptions" value="Health Check"
-                       onChange={e => setSettings({
-                           ...settings,
-                           targetObservabilityOptions: e.target.id
-                       })}/>
+                <Checkbox id="health-check" name="targetObservabilityOptions" value="Health Check"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
+                <Label htmlFor="health-check">Health Check</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Checkbox id="health-check" name="targetObservabilityOptions" value="Health Check"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
+                <Label htmlFor="health-check">APIs Gateway</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Checkbox id="reverse-proxy" name="targetObservabilityOptions" value="Reverse Proxy"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
+                <Label htmlFor="reverse-proxy">Reverse Proxy</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Checkbox id="redis-cache" name="targetObservabilityOptions" value="Redis Cache"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
+                <Label htmlFor="redis-cashe">Redis Cache</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Checkbox id="health-check" name="targetObservabilityOptions" value="Health Check"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
                 <Label htmlFor="health-check">Health Check</Label>
             </div>
         </div>

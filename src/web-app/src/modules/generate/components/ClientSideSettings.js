@@ -2,7 +2,6 @@ import {Label, Radio} from "flowbite-react";
 import React from "react";
 
 const ClientSideSettings = ({settings, setSettings}) => <>
-
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
         <div style={{width: '48%'}}>
             <Label htmlFor="targetClientPlatformTypeSettings">
@@ -31,21 +30,21 @@ const ClientSideSettings = ({settings, setSettings}) => <>
                 Target Client Platform
             </Label>
             <div className="flex items-center gap-2">
-                <Radio id="azure-cloud" name="targetClientPlatformSettings" value="Microsoft Azure Cloud"
+                <Radio id="react-js" name="targetClientPlatformSettings" value="React JS"
                        onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                <Label htmlFor="azure-cloud">React JS</Label>
+                <Label htmlFor="react-js">React JS</Label>
             </div>
 
             <div className="flex items-center gap-2">
-                <Radio id="amazon-cloud" name="targetClientPlatformSettings" value="Amazon Cloud"
+                <Radio id="angular" name="targetClientPlatformSettings" value="Angular"
                        onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                <Label htmlFor="amazon-cloud">Angular</Label>
+                <Label htmlFor="angular">Angular</Label>
             </div>
 
             <div className="flex items-center gap-2">
-                <Radio id="google-cloud" name="targetClientPlatformSettings" value="Google Cloud"
+                <Radio id="vue-js" name="targetClientPlatformSettings" value="Vue JS"
                        onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                <Label htmlFor="google-cloud">Vue JS</Label>
+                <Label htmlFor="vue-js">Vue JS</Label>
             </div>
         </div>
     </div>
