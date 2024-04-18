@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { saveAs } from 'file-saver';
 
 const BoardsContext = createContext();
 
@@ -65,12 +66,39 @@ const BoardsProvider = ({ children }) => {
         addOrUpdateBoard(model);
     };
 
+    const handleSaveDiagramAsCodeChange = async (diagram, diagramCode) => {
+        const defaultPath = localStorage.getItem('workspace-path') + "/domain-context-"+ diagram.type +".json";
+        const from = localStorage.getItem('from');
+        window.postMessage({type: "createFile", filePath: "/domain-context-"+ diagram.type +".json", fileContent: diagramCode}, '*');
+
+        if(from) {
+            var file = new File([diagramCode], defaultPath, {type: "text/plain;charset=utf-8"});
+            saveAs(file);
+        } else {
+            try {
+                const opts = {
+                    suggestedName: defaultPath
+                };
+                const handle = await window.showSaveFilePicker(opts);
+                const writableStream = await handle.createWritable();
+                await writableStream.write(diagramCode);
+                await writableStream.close();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('File save operation aborted by the user.');
+                } else {
+                    console.error('Error saving file:', error);
+                }
+            }
+        }
+    };
     const value = {
         boards,
         addOrUpdateBoard,
         findBoardById,
         generateJsonModel,
-        saveFlowModel
+        saveFlowModel,
+        handleSaveDiagramAsCodeChange
     };
 
     return <BoardsContext.Provider value={value}>{children}</BoardsContext.Provider>;

@@ -1,12 +1,29 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Handle} from "react-flow-renderer";
+import {useParams} from "react-router-dom";
+import {BoardsContext} from "../BoardProvider";
 
-const CustomNode = ({ data }) => {
+const CustomNode = ({ id, data }) => {
+    const boardId = useParams().id;
+    const {findBoardById} = useContext(BoardsContext);
+    const diagram = findBoardById(boardId);
     const [labelText, setLabelText] = useState(data.label);
 
     const handleInputChange = (event) => {
         setLabelText(event.target.value);
+        const {nodes} = diagram;
+        updateNodeLabel(nodes, id, event.target.value);
     };
+
+    const updateNodeLabel = (nodes, id, newLabel) => {
+        const index = nodes.findIndex(node => node.id === id);
+        if (index !== -1) {
+            nodes[index].data.label = newLabel;
+        } else {
+            console.error(`Node with id ${id} not found.`);
+        }
+        return nodes;
+    }
 
     return (
         <div className="m-2 bg-[#0077b6] rounded-md p-6 cursor-pointer flex justify-center items-center hover:bg-[#005b8d]"
