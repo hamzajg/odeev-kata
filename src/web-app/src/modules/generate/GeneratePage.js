@@ -45,7 +45,7 @@ const GeneratePage = () => {
                         <RequiredStepsProgress />
                     </div>
                     <div style={{width: '48%'}}>
-                        <GenerationSettings />
+                        <GenerationSettings project={project}/>
                     </div>
                 </div>
             </Card>

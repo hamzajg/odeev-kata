@@ -28,7 +28,6 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
     if (workspaceFolders) {
         workspacePath = workspaceFolders[0].uri.fsPath;
     }
-    // VSCode extension
     panel.webview.onDidReceiveMessage(message => {
         console.log('VSCODE Received data:', message);
 
@@ -52,6 +51,7 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
             <div id="root"></div>
           </body>
           <script>
+                document.body.classList.toggle("dark")
             window.postMessage("Init message", "*");    
             const vscode = acquireVsCodeApi();
             window.addEventListener('message', event => {
