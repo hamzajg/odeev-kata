@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {Accordion, Sidebar, Textarea} from 'flowbite-react';
+import {Accordion, Button, Sidebar} from 'flowbite-react';
 import ReactFlow, {
     addEdge,
     MiniMap,
@@ -16,13 +16,15 @@ import CustomNode from "./components/CustomNode";
 import AIChatDialog from "./components/AIChatDialog";
 import {BoardsContext} from "./BoardProvider";
 import {DiagramsContext} from "../diagrams/DiagramProvider";
+import CodeEditor from "@uiw/react-textarea-code-editor";
+import { saveAs } from 'file-saver';
 
 const nodeTypes = {custom: (props) => <CustomNode {...props}/>};
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 function BoardPage() {
     const {id} = useParams();
-    const {saveFlowModel, generateJsonModel, findBoardById} = useContext(BoardsContext);
+    const {saveFlowModel, findBoardById} = useContext(BoardsContext);
     const {findDiagramById} = useContext(DiagramsContext);
     const [diagramCode, setDiagramCode] = useState('');
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -37,6 +39,7 @@ function BoardPage() {
             const {nodes, edges} = storedModel;
             setNodes(nodes);
             setEdges(edges);
+            setDiagramCode(JSON.stringify(nodes, undefined, 2))
         }
     }, [setNodes, setEdges]);
 
@@ -64,6 +67,7 @@ function BoardPage() {
                 })
             );
             saveFlowModel(id, nodes, edges);
+            setDiagramCode(JSON.stringify(nodes, undefined, 2))
         }
     };
 
@@ -78,9 +82,25 @@ function BoardPage() {
         }
     };
 
+    const handleSaveDiagramAsCodeChange = async () => {
+        const defaultPath = localStorage.getItem('workspace-path') + "/domain-context-"+ diagram.type +".json";
+        const from = localStorage.getItem('from');
+        if(from) {
+            var file = new File([diagramCode], defaultPath, {type: "text/plain;charset=utf-8"});
+            saveAs(file);
+        } else {
+            const opts = {
+                suggestedName: defaultPath
+            };
+            const handle = await window.showSaveFilePicker(opts);
+            const writableStream = await handle.createWritable();
+            await writableStream.write(diagramCode);
+            await writableStream.close();
+        }
+    };
+
     return (
         <div className="flex h-full">
-            {/* Left Side Panel - Palette */}
             <div className="w-64 bg-gray-800 text-white">
                 <Sidebar>
                     <Sidebar.Logo href="#" img="" className="tracking-tight text-gray-900 dark:text-white">
@@ -134,7 +154,6 @@ function BoardPage() {
                 </ReactFlow>
             </div>
 
-            {/* Right Panel - Diagram as Code */}
             <div className="w-64 bg-gray-800 text-white h-screen">
                 <Sidebar>
                     <Sidebar.Items>
@@ -143,12 +162,19 @@ function BoardPage() {
                                 <Accordion.Panel>
                                     <Accordion.Title>Diagram as Code</Accordion.Title>
                                     <Accordion.Content>
-                                        <Textarea
-                                            id="diagramCode"
-                                            placeholder="type code here or diagram code will generated here"
+                                        <Button className="aling-right mb-2" onClick={handleSaveDiagramAsCodeChange}>Save</Button>
+                                        <CodeEditor
                                             value={diagramCode}
+                                            language="json"
+                                            placeholder="type code here or diagram code will generated here"
                                             onChange={handleDiagramCodeChange}
+                                            padding={15}
                                             rows={50}
+                                            style={{
+                                                backgroundColor: "#333",
+                                                maxHeight: "100%",
+                                                fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace'
+                                            }}
                                         />
                                     </Accordion.Content>
                                 </Accordion.Panel>

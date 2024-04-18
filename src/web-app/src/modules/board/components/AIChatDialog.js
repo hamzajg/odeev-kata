@@ -1,37 +1,57 @@
-import React, { useState } from 'react';
-import { Button, Card, Textarea } from 'flowbite-react';
+import React, {useState} from 'react';
+import {Button, Card, Textarea} from 'flowbite-react';
 
 const AIChatDialog = () => {
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState([]);
+    const placeholderResponse = 'AI: Thinking...';
 
     const handleInputChange = (event) => {
         setMessage(event.target.value);
     };
 
-    const handleUserMessage = (message) => {
+    const handleUserMessage = async (message) => {
         if(message === '')
             return;
-        const aiResponse = simulateAIResponse(message);
-
         setMessages((prevMessages) => [
             ...prevMessages,
             { text: message, sender: 'user' },
-            { text: aiResponse, sender: 'ai' },
         ]);
+        setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: placeholderResponse, sender: 'ai' },
+        ]);
+        const aiResponse = await simulateAIResponse(message);
+
+        setMessages((prevMessages) => {
+            const newMessages = [...prevMessages];
+            newMessages[newMessages.length - 1] = { text: aiResponse, sender: 'ai' }
+            return newMessages;
+        });
         setMessage('');
     };
 
-    const simulateAIResponse = (userMessage) => {
-        return 'AI: ' + userMessage;
+    const simulateAIResponse = async (userMessage) => {// Call the REST API
+        const response = await fetch('http://localhost:8081/ai/generate?message=' + userMessage, {
+            method: 'GET',
+            mode: 'cors',
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data.generation;
+        } else {
+            console.error('Error fetching AI response:', response.status);
+            return 'AI: An error occurred. Please try again later.';
+        }
     };
 
     return (
         <div className="ai-chat-dialog h-screen">
             <div className="ai-chat-messages overflow-y-auto h-4/6">
                 {messages.map((message, index) => (
-                    <Card key={index} className={`ai-chat-message ${message.sender} m-2`}>
-                        <div className={`text-${message.sender === 'user' ? 'left' : 'right'}`}>
+                    <Card key={index} className={`ai-chat-message bg-gray-${message.sender === 'user' ? '400' : '100'} m-2`}>
+                        <div className={` text-gray-700 dark:text-gray-50 text-${message.sender === 'user' ? 'left' : 'right'}`}>
                             {message.text}
                         </div>
                     </Card>

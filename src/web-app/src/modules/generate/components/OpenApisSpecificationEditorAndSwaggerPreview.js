@@ -2,9 +2,11 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 import SwaggerUI from "swagger-ui-react";
 import 'swagger-ui-react/swagger-ui.css';
 import React, {useState} from "react";
+import {Button} from "flowbite-react";
+import { saveAs } from 'file-saver';
 
 const OpenApisSpecificationEditorAndSwaggerPreview = () => {
-
+    const [savedTo, setSavedTo] = useState();
     const [yamlValue, setYAMLValue] = useState('openapi: 3.0.0\n' +
         'info:\n' +
         '  title: Todo API\n' +
@@ -77,9 +79,29 @@ const OpenApisSpecificationEditorAndSwaggerPreview = () => {
     const handleYAMLChange = (newValue) => {
         setYAMLValue(newValue);
     };
+
+    const handleSaveYAMLChange = async () => {
+        const defaultPath = localStorage.getItem('workspace-path') + "/open-apis-specs.yml";
+        const from = localStorage.getItem('from');
+        if(from) {
+            var file = new File([yamlValue], defaultPath, {type: "text/plain;charset=utf-8"});
+            saveAs(file);
+        } else {
+            const opts = {
+                suggestedName: defaultPath
+            };
+            const handle = await window.showSaveFilePicker(opts);
+            const writableStream = await handle.createWritable();
+            await writableStream.write(yamlValue);
+            await writableStream.close();
+        }
+
+        setSavedTo(defaultPath);
+    };
     return(
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <div style={{width: '48%'}}>
+                <Button className="aling-right mb-2" onClick={handleSaveYAMLChange}>Save</Button> {savedTo && "Saved to: " + savedTo}
                 <CodeEditor
                     value={yamlValue}
                     language="yaml"

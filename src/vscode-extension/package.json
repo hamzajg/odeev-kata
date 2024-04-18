@@ -18,6 +18,12 @@
       }
     ]
   },
+  "contentSecurityPolicy": {
+    "frame-src": [
+      "'self'",
+      "http://localhost:3000"
+    ]
+  },
   "scripts": {
     "package": "vsce package",
     "vscode:prepublish": "npm run compile",

@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { Uri, WebviewPanel, WebviewOptions } from 'vscode';
+const workspaceFolders = vscode.workspace.workspaceFolders;
 
 export function activate(context: vscode.ExtensionContext) {
     const openWebUrlCommand = vscode.commands.registerCommand('odeev-kata-poc-app-extension.open', () => {
@@ -27,6 +28,10 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
 }
 
 function getWebviewContent(extensionUri: Uri): string {
+    let workspacePath = "";
+    if (workspaceFolders) {
+        workspacePath = workspaceFolders[0].uri.fsPath;
+    }
 
     return `
     <!DOCTYPE html>
@@ -38,7 +43,7 @@ function getWebviewContent(extensionUri: Uri): string {
       <style> html, body {width: 100%; height: 100%}</style>
     </head>
     <body>
-      <iframe src="http://localhost:3000" style="height:100%; width:100%"  width="100%" height="100%"></iframe>
+      <iframe src="http://localhost:3000?workspace-path=${workspacePath}&from=vs-code" style="height:100%; width:100%"  width="100%" height="100%"></iframe>
     </body>
     </html>
   `;
