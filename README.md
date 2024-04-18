@@ -57,6 +57,72 @@ graph LR;
     style CLITool fill:#f39c12,stroke:#d35400,stroke-width:2px;
 ```
 ## Generated Solutions Overview
+- Modular Monolith Architecture
+
+```mermaid
+graph TD;
+
+    subgraph Service
+        AuthMod[Authentication Module]
+        ProdMod[Product Module]
+        OrderMod[Order Module]
+        style AuthMod fill:#3498db,stroke:#2980b9,stroke-width:2px
+        style ProdMod fill:#27ae60,stroke:#27ae60,stroke-width:2px
+        style OrderMod fill:#f39c12,stroke:#d35400,stroke-width:2px
+    end
+
+    subgraph Database
+        DB[Database]
+        style DB fill:#9b59b6,stroke:#8e44ad,stroke-width:2px
+    end
+
+    subgraph APIGateway
+        Gateway[API Gateway]
+        style Gateway fill:#16a085,stroke:#27ae60,stroke-width:2px
+    end
+
+    Service --> AuthMod;
+    Service --> ProdMod;
+    Service --> OrderMod;
+
+    Service --> DB;
+    Gateway --> Service;
+
+```
+
+- Microservices Architecture
+
+```mermaid
+graph LR;
+
+    subgraph Gateway
+        gw1[API Gateway]
+        style gw1 fill:#3498db,stroke:#2980b9,stroke-width:2px
+    end
+
+    subgraph Services
+        s1[Service A]
+        s2[Service B]
+        s3[Service C]
+        style s1 fill:#27ae60,stroke:#27ae60,stroke-width:2px
+        style s2 fill:#27ae60,stroke:#27ae60,stroke-width:2px
+        style s3 fill:#27ae60,stroke:#27ae60,stroke-width:2px
+    end
+
+    subgraph Database
+        db1[Database A]
+        db2[Database B]
+        style db1 fill:#f39c12,stroke:#d35400,stroke-width:2px
+        style db2 fill:#f39c12,stroke:#d35400,stroke-width:2px
+    end
+
+    gw1 --> s1;
+    gw1 --> s2;
+    gw1 --> s3;
+    s1 --> db1;
+    s2 --> db2;
+```
+
 - Classic Layered Architecture
 
 ```mermaid
