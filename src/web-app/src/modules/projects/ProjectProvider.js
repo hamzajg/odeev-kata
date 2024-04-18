@@ -23,15 +23,20 @@ const ProjectProvider = ({ children }) => {
         setProjects(updatedProjects);
     };
 
-    const findProjectById = (projectId) => {
-        return projects.find(project => project.id === projectId);
+    const findProjectById = (id) => {
+        return projects.find(project => project.id === id);
+    }
+
+    const findProjectsBySolutionId = (solutionId) => {
+        return projects.filter(project => project.solutionId === solutionId);
     }
 
     const value = {
         projects,
         addProject,
         removeProject,
-        findProjectById
+        findProjectById,
+        findProjectsBySolutionId
     };
 
     return <ProjectContext.Provider value={value}>{children}</ProjectContext.Provider>;

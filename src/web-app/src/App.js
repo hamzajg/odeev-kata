@@ -9,6 +9,7 @@ import BoardPage from "./modules/board/BoardPage";
 import GeneratePage from "./modules/generate/GeneratePage";
 import TeamsPage from "./modules/teams/TeamsPage";
 import FrameworkHubPage from "./modules/framework/FrameworkHubPage";
+import SolutionsPage from "./modules/solutions/SolutionsPage";
 
 const App = () => {
     return (
@@ -17,7 +18,8 @@ const App = () => {
                 <ModulesProvider>
                     <Routes>
                         <Route path="/" element={<HomePage/>}/>
-                        <Route path="/projects" element={<ProjectsPage/>}/>
+                        <Route path="/solutions" element={<SolutionsPage/>}/>
+                        <Route path="/solutions/:id/projects" element={<ProjectsPage/>}/>
                         <Route path="/teams" element={<TeamsPage/>}/>
                         <Route path="/projects/:id/diagrams" element={<DiagramsPage/>}/>
                         <Route path="/projects/:id/diagrams/:id/board" element={<BoardPage/>}/>

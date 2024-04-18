@@ -1,21 +1,25 @@
 import React, {useContext, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Button, Card, Select, Table, Textarea, TextInput} from "flowbite-react";
 import {DiagramsContext} from "./DiagramProvider";
 import {ProjectContext} from "../projects/ProjectProvider";
 import Drawer from "../../ui/components/Drawer";
 
 const DiagramsPage = () => {
-    const { id } = useParams(); // Extract project ID from URL params
-    const { findProjectById } = useContext(ProjectContext);
-    const { findDiagramsByProjectId, addDiagram } = useContext(DiagramsContext);
+    const {id} = useParams();
+    const {findProjectById} = useContext(ProjectContext);
+    const {findDiagramsByProjectId, addDiagram} = useContext(DiagramsContext);
+    const navigate = useNavigate();
 
     const project = findProjectById(id)
     const projectDiagrams = findDiagramsByProjectId(id);
 
     const [showRightPanel, setShowRightPanel] = useState(false);
     const [formData, setFormData] = useState({id: '', projectId: id, name: '', description: '', type: ''});
-
+    const types = [{id: "event-storming-big-picture", name: "Event Storming Big Picture"},
+        {id: "event-storming-design-level", name: "Event Storming Design Level"},
+        {id: "event-modeling", name: "Event Modeling"},
+        {id: "specification-by-example", name: "Specification by Example"}]
     const handleAddDiagram = () => {
         setShowRightPanel(true);
     };
@@ -29,7 +33,7 @@ const DiagramsPage = () => {
     };
 
     if (!project) {
-        return <div>Project not found</div>;
+        navigate("/projects");
     }
 
     return (
@@ -72,7 +76,8 @@ const DiagramsPage = () => {
                             <Table.Cell>{diagram.updatedAt}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex flex-wrap gap-2">
-                                    <Button color="green"><Link to={"/projects/" + diagram.projectId + "/diagrams/" + diagram.id + "/board"}>Board</Link></Button>
+                                    <Button color="green"><Link
+                                        to={"/projects/" + diagram.projectId + "/diagrams/" + diagram.id + "/board"}>Board</Link></Button>
                                     <Button color="blue">Edit</Button>
                                     <Button color="red">Remove</Button>
                                 </div>
@@ -124,14 +129,15 @@ const DiagramsPage = () => {
                             </label>
                         </div>
                         <Select id="diagramType" value={formData.type}
+                                required={true}
                                 onChange={(e) => setFormData({...formData, type: e.target.value})}>
-                            <option value="event-storming-big-picture">Event Storming Big Picture</option>
-                            <option value="event-storming-design-level">Event Storming Design Level</option>
-                            <option value="event-modeling">Event Modeling</option>
-                            <option value="specification-by-example">Specification by Example</option>
+                            <option value="">Select Type</option>
+                            {types.map((type, key) => (
+                                <option value={type.id} key={key}>{type.name}</option>
+                            ))}
                         </Select>
                     </div>
-                    <div className="w-full">
+                    <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
                         <Button type="submit">Create Diagram</Button>
                     </div>
                 </form>

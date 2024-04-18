@@ -1,16 +1,23 @@
 import React, {useContext, useState} from 'react';
-import {Button, Table, TextInput, Textarea} from 'flowbite-react';
+import {Button, Table, TextInput, Textarea, Card} from 'flowbite-react';
 import {ProjectContext} from "./ProjectProvider";
 import Drawer from "../../ui/components/Drawer";
 import Multiselect from 'multiselect-react-dropdown';
 import {TeamContext} from "../teams/TeamsProvider";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {SolutionContext} from "../solutions/SolutionProvider";
+import domains from "../solutions/Domains.json";
 
 const ProjectsPage = () => {
+    const {id} = useParams();
+    const {findSolutionById} = useContext(SolutionContext);
+    const solution = findSolutionById(id)
+    const navigate = useNavigate();
     const [showRightPanel, setShowRightPanel] = useState(false);
-    const {addProject, projects} = useContext(ProjectContext);
+    const {addProject, findProjectsBySolutionId} = useContext(ProjectContext);
+    const projects = findProjectsBySolutionId(id)
     const {teams} = useContext(TeamContext);
-    const [formData, setFormData] = useState({id: '', name: '', description: '', tags: [], teamMembers: []});
+    const [formData, setFormData] = useState({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
     const tags = [{name: "DDD", id: 1}, {name: "Clean Architecture", id: 2}]
     const handleAddProject = () => {
         setShowRightPanel(true);
@@ -20,14 +27,25 @@ const ProjectsPage = () => {
         e.preventDefault();
         console.log('Form submitted:', formData);
         addProject(formData);
-        setFormData({id: '', name: '', description: '', tags: [], teamMembers: []});
+        setFormData({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
         setShowRightPanel(false);
     };
 
+    if (!solution) {
+        navigate("/solutions");
+    }
+
     return (
         <div className="p-6">
+            <Card className="mb-2">
+                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                    {solution.name}
+                </h5>
+                <p>Domain: {domains.find(d => d.id == solution.domain).name}</p>
+                <p>Description: {solution.description}</p>
+            </Card>
             <div className="flex justify-between mb-4">
-                <h1 className="text-2xl font-bold">Projects</h1>
+                <h1 className="text-2xl font-bold">Projects (Other Names: Modules, Bounded Context)</h1>
                 <Button color="blue" onClick={handleAddProject}>Add Project</Button>
             </div>
 
@@ -122,7 +140,7 @@ const ProjectsPage = () => {
                             selectedValues={formData.teamMembers}
                             onSelect={(list, value) => setFormData({...formData, teamMembers: [...formData.teamMembers, value]})}/>
                     </div>
-                    <div className="w-full">
+                    <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
                         <Button type="submit">Create Project</Button>
                     </div>
                 </form>
