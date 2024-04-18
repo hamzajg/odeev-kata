@@ -103,11 +103,48 @@ graph TD;
         Infrastructure[Infrastructure] -->|Implement| Adapter;
         Adapter -->|Use| External[External System];
     end
-
 ```
 
 
 ## Architecture & Modeling
+
+
+```mermaid
+graph TD;
+ 
+    subgraph Event Storming Big Picture
+        CustomerRegistered[Customer Registered]
+        OrderCreated[Order Created]
+        OrderShipped[Order Shipped]
+        OrderDelivered[Order Delivered]
+        OrderCancelled[Order Cancelled]
+        style CustomerRegistered fill:#f39c12,stroke:#d35400,stroke-width:2px
+        style OrderCreated fill:#f39c12,stroke:#d35400,stroke-width:2px
+        style OrderShipped fill:#f39c12,stroke:#d35400,stroke-width:2px
+        style OrderDelivered fill:#f39c12,stroke:#d35400,stroke-width:2px
+        style OrderCancelled fill:#f39c12,stroke:#d35400,stroke-width:2px
+        FraudCheck[Fraud Check]
+        ShippingPolicy[Shipping Policy]
+        style FraudCheck fill:#9b59b6,stroke:#8e44ad,stroke-width:2px
+        style ShippingPolicy fill:#9b59b6,stroke:#8e44ad,stroke-width:2px
+    end
+```
+
+```mermaid
+graph TD;
+    subgraph Specification by Example BDD
+        G1[Given: Customer is registered]
+        style G1 fill:#f1c40f,stroke:#f39c12,stroke-width:2px
+        
+        W1[When: Customer places an order]
+        style W1 fill:#3498db,stroke:#2980b9,stroke-width:2px
+        
+        T1[Then: Order is shipped]
+        style T1 fill:#e74c3c,stroke:#c0392b,stroke-width:2px
+    end
+
+```
+
 ### Existing tools:
 ### Web
 - https://domorobo.to/
