@@ -51,7 +51,6 @@ const SolutionsPage = () => {
                             </Table.Cell>
                         </Table.Row>
                     ))}
-
                 </Table.Body>
             </Table>
 
