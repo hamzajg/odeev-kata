@@ -16,7 +16,6 @@ const BoardsProvider = ({ children }) => {
     const addOrUpdateBoard = (newBoard) => {
         const existingBoardIndex = boards.findIndex(board => board.id === newBoard.id);
         if (existingBoardIndex !== -1) {
-            // Update existing board
             const updatedBoards = [...boards];
             updatedBoards[existingBoardIndex] = {
                 ...updatedBoards[existingBoardIndex],
@@ -25,7 +24,6 @@ const BoardsProvider = ({ children }) => {
             };
             setBoards(updatedBoards);
         } else {
-            // Add new board
             newBoard.createdAt = new Date().toISOString();
             newBoard.updatedAt = new Date().toISOString();
             setBoards([...boards, newBoard]);

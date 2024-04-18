@@ -19,7 +19,9 @@ const DiagramsPage = () => {
     const types = [{id: "event-storming-big-picture", name: "Event Storming Big Picture"},
         {id: "event-storming-design-level", name: "Event Storming Design Level"},
         {id: "event-modeling", name: "Event Modeling"},
-        {id: "specification-by-example", name: "Specification by Example"}]
+        {id: "specification-by-example", name: "Specification by Example"},
+        {id: "uml-sequence-diagram", name: "UML Sequence Diagram"},
+        {id: "orm-entity-diagram", name: "ORM Entity Diagram"}]
     const handleAddDiagram = () => {
         setShowRightPanel(true);
     };
