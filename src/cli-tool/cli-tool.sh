@@ -6,6 +6,7 @@ display_help() {
     echo "Supported commands:"
     echo "  create-solution      : Create a new solution"
     echo "  create-project       : Create a new project"
+    echo "  framework-migration  : Migrate framework version"
     echo "  add-domain           : Add a new domain"
     echo "  add-application-service : Add a new application service"
     echo "  add-domain-service   : Add a new domain service"

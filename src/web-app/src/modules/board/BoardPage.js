@@ -26,7 +26,7 @@ function BoardPage() {
     const {saveFlowModel, findBoardById, handleSaveDiagramAsCodeChange} = useContext(BoardsContext);
     const {findDiagramById} = useContext(DiagramsContext);
     const [diagramCode, setDiagramCode] = useState('');
-    const [reactFlowInstance, setReactFlowInstance] = useState(null);
+    const [setReactFlowInstance] = useState(null);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const diagram = findDiagramById(id);
@@ -38,7 +38,7 @@ function BoardPage() {
             setNodes(nodes);
             setEdges(edges);
         }
-    }, [setNodes, setEdges]);
+    }, [id, findBoardById, setNodes, setEdges]);
 
     const onConnect = useCallback(
         (params) => setEdges((eds) => addEdge(params, eds)),

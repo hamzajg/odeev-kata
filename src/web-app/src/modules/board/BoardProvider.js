@@ -65,11 +65,11 @@ const BoardsProvider = ({ children }) => {
     };
 
     const handleSaveDiagramAsCodeChange = async (diagram, diagramCode) => {
-        const defaultPath = localStorage.getItem('workspace-path') + "/domain-context-"+ diagram.type +".json";
-        const from = localStorage.getItem('from');
+        const workspacePath = localStorage.getItem('workspace-path');
+        const defaultPath =  workspacePath + "/domain-context-"+ diagram.type +".json";
         window.postMessage({type: "createFile", filePath: "/domain-context-"+ diagram.type +".json", fileContent: diagramCode}, '*');
 
-        if(from) {
+        if(!workspacePath) {
             var file = new File([diagramCode], defaultPath, {type: "text/plain;charset=utf-8"});
             saveAs(file);
         } else {

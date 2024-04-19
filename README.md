@@ -8,7 +8,7 @@ practices that can be applied to the generated solutions project.
 Will try to present a Pragmatic and Evolutionary Solution Architecture, from integrating with existing tools, 
 custom Web App Tool, IDE Extension like (VSCode, JetBrains IDEs), console CLI commands tool.
 
-# IMPORTANT NOTE: Continuous Learning & Having Fun :)
+## IMPORTANT NOTE: Continuous Learning & Having Fun :)
 
 ## Introduction
 The solution is sort of integrated platform designed to provide a comprehensive development environment for building 
@@ -277,7 +277,7 @@ and simplifies the development process.
 
 - Here a list of existing tools both on the Web and VSCode:
   - Web
-    - https://domorobo.to/
+    - https://domorobo.to/ (Contributor)
     - https://prooph-board.com/
     - https://www.modelmycode.com/
   - VSCode Extension
@@ -298,6 +298,7 @@ Additionally, local AI models provide greater control over the training process 
 and refine their models based on real-world feedback and insights.
 
 ## PoC
+
 ### Overview
 
 ### Architecture Decisions Records

@@ -4017,13 +4017,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/wicg-file-system-access@npm:^2020.9.2":
-  version: 2020.9.8
-  resolution: "@types/wicg-file-system-access@npm:2020.9.8"
-  checksum: baa8ca664b4ebc89b4d39f8ee98fa81b887009b0dc99008f9e69b35e6ddb286018b6309232ed3970666c543ce85e7f447c9cdd20152d92b1ff810d29d5895a36
-  languageName: node
-  linkType: hard
-
 "@types/ws@npm:^8.5.5":
   version: 8.5.10
   resolution: "@types/ws@npm:8.5.10"
@@ -7722,16 +7715,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fetch-blob@npm:^3.0.0":
-  version: 3.2.0
-  resolution: "fetch-blob@npm:3.2.0"
-  dependencies:
-    node-domexception: "npm:^1.0.0"
-    web-streams-polyfill: "npm:^3.0.3"
-  checksum: 60054bf47bfa10fb0ba6cb7742acec2f37c1f56344f79a70bb8b1c48d77675927c720ff3191fa546410a0442c998d27ab05e9144c32d530d8a52fbe68f843b69
-  languageName: node
-  linkType: hard
-
 "file-entry-cache@npm:^6.0.1":
   version: 6.0.1
   resolution: "file-entry-cache@npm:6.0.1"
@@ -7757,21 +7740,6 @@ __metadata:
   version: 2.0.5
   resolution: "file-saver@npm:2.0.5"
   checksum: 0a361f683786c34b2574aea53744cb70d0a6feb0fa5e3af00f2fcb6c9d40d3049cc1470e38c6c75df24219f247f6fb3076f86943958f580e62ee2ffe897af8b1
-  languageName: node
-  linkType: hard
-
-"file-system-access@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "file-system-access@npm:1.0.4"
-  dependencies:
-    "@types/wicg-file-system-access": "npm:^2020.9.2"
-    fetch-blob: "npm:^3.0.0"
-    node-domexception: "npm:^1.0.0"
-    web-streams-polyfill: "npm:^3.1.0"
-  dependenciesMeta:
-    web-streams-polyfill:
-      optional: true
-  checksum: e98e828c7950b9f2f83b0ac132690eecb9cf93ef3b08bde0c97047dcc0b235e3a70642e75f968c078e755a21c81651083b5038104f4564b7a2542e40c96ca015
   languageName: node
   linkType: hard
 
@@ -16052,7 +16020,6 @@ __metadata:
     "@uiw/react-textarea-code-editor": "npm:^3.0.2"
     autoprefixer: "npm:^10.4.19"
     file-saver: "npm:^2.0.5"
-    file-system-access: "npm:^1.0.4"
     flowbite-react: "npm:^0.8.0"
     multiselect-react-dropdown: "npm:^2.0.25"
     postcss: "npm:^8.4.38"
@@ -16077,7 +16044,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-streams-polyfill@npm:^3.0.3, web-streams-polyfill@npm:^3.1.0":
+"web-streams-polyfill@npm:^3.0.3":
   version: 3.3.3
   resolution: "web-streams-polyfill@npm:3.3.3"
   checksum: 64e855c47f6c8330b5436147db1c75cb7e7474d924166800e8e2aab5eb6c76aac4981a84261dd2982b3e754490900b99791c80ae1407a9fa0dcff74f82ea3a7f
