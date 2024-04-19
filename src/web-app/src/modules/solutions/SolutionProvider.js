@@ -17,7 +17,47 @@ const SolutionProvider = ({ children }) => {
     const addSolution = (newSolution) => {
         newSolution.id = uuidv4();
         setSolutions([...solutions, newSolution]);
+        postSolution(newSolution)
     };
+
+    const postSolution = async (newSolution) => {
+        try {
+            const response = await fetch('http://localhost:8081/solutions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newSolution),
+            });
+
+            if (response.ok) {
+                console.error('Solution added:');
+            } else {
+                console.error('Error adding solution:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding solution:', error);
+        }
+    };
+
+    useEffect(() => {
+        const fetchSolutions = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/solutions');
+
+                if (response.ok) {
+                    const fetchedSolutions = await response.json();
+                    setSolutions(fetchedSolutions);
+                } else {
+                    console.error('Error fetching solutions:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching solutions:', error);
+            }
+        };
+
+        fetchSolutions();
+    }, []);
 
     const findSolutionById = (id) => {
         return solutions.find(solution => solution.id === id);

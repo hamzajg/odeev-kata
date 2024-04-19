@@ -16,7 +16,47 @@ const ProjectProvider = ({ children }) => {
     const addProject = (newProject) => {
         newProject.id = uuidv4();
         setProjects([...projects, newProject]);
+        postProject(newProject)
     };
+
+    const postProject = async (newProject) => {
+        try {
+            const response = await fetch('http://localhost:8081/projects', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newProject),
+            });
+
+            if (response.ok) {
+                console.error('Project added:');
+            } else {
+                console.error('Error adding project:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding project:', error);
+        }
+    };
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/projects');
+
+                if (response.ok) {
+                    const fetchedProjects = await response.json();
+                    setProjects(fetchedProjects);
+                } else {
+                    console.error('Error fetching projects:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+            }
+        };
+
+        fetchProjects();
+    }, []);
 
     const removeProject = (projectId) => {
         const updatedProjects = projects.filter((project) => project.id !== projectId);

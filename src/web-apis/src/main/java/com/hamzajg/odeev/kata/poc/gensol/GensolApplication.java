@@ -1,10 +1,31 @@
 package com.hamzajg.odeev.kata.poc.gensol;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@OpenAPIDefinition(
+		info = @Info(
+				contact = @Contact(name = "Hamza Jguerim", email = "hamzajg@gmail.com", url = "https://github.com/hamzajg"),
+				description = "Odeev Kata REST APIS",
+				title = "Odeev Kata REST APIS",
+				version = "1.0"
+		),
+		servers = {
+				@Server(description = "Local ENV", url = "http://localhost:8081"),
+				@Server(description = "PROD ENV", url = "http://localhost:8080")
+		}
+)
 
 @SpringBootApplication
 public class GensolApplication {
@@ -19,9 +40,10 @@ public class GensolApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000")
+						.allowedOrigins("*")
 						.allowedMethods("*")
-						.allowedHeaders("*");			}
+						.allowedHeaders("*");
+			}
 		};
 	}
 

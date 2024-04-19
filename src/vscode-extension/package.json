@@ -21,7 +21,8 @@
   "contentSecurityPolicy": {
     "frame-src": [
       "'self'",
-      "http://localhost:3000"
+      "http://localhost:3000",
+      "http://localhost:8081"
     ]
   },
   "scripts": {

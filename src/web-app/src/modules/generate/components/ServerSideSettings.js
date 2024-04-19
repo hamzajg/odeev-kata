@@ -39,6 +39,14 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                        })}/>
                 <Label htmlFor="sap">SAP</Label>
             </div>
+            <div className="flex items-center gap-2">
+                <Radio id="salesforce" name="targetIntegrationPlatform" value="Salesforce"
+                       onChange={e => setSettings({
+                           ...settings,
+                           targetIntegrationPlatform: e.target.id
+                       })}/>
+                <Label htmlFor="salesforce">Salesforce</Label>
+            </div>
         </div>}
     </div>
 
@@ -439,6 +447,14 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                               targetObservabilityOptions: e.target.id
                           })}/>
                 <Label htmlFor="health-check">Health Check</Label>
+            </div>
+            <div className="flex items-center gap-2">
+                <Checkbox id="native-image" name="targetObservabilityOptions" value="Native Image"
+                          onChange={e => setSettings({
+                              ...settings,
+                              targetObservabilityOptions: e.target.id
+                          })}/>
+                <Label htmlFor="native-image">Native Image (GraalVM, Microsoft Native Image)</Label>
             </div>
         </div>
     </div>

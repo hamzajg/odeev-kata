@@ -34,7 +34,7 @@ const AIChatDialog = () => {
     const simulateAIResponse = async (userMessage) => {// Call the REST API
         const response = await fetch('http://localhost:8081/ai/generate?message=' + userMessage, {
             method: 'GET',
-            mode: 'cors',
+            mode: 'no-cors',
         });
 
         if (response.ok) {

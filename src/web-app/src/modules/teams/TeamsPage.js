@@ -8,6 +8,8 @@ const TeamsPage = () => {
     const [showRightPanel, setShowRightPanel] = useState(false);
     const { addTeam, teams } = useContext(TeamContext);
     const [formData, setFormData] = useState({id: '', name: '', description: '', guild: '', members: []});
+    const [options, setOptions] = useState([{name: "Hamza Jguerim", id: 1}, {name: "Joe Doe", id: 2}]);
+    const [selectedValues, setSelectedValues] = useState([]);
 
     const handleAddTeam = () => {
         setShowRightPanel(true);
@@ -18,21 +20,17 @@ const TeamsPage = () => {
         console.log('Form submitted:', formData);
         addTeam(formData);
         setFormData({id: '', name: '', description: '', guild: '', members: []});
+        setSelectedValues([])
         setShowRightPanel(false);
     };
-
-    const options = [{name: "Hamza Jguerim", id: 1}, {name: "Joe Doe", id: 2}]
 
     return (
         <div className="p-6">
             <div className="flex justify-between mb-4">
                 <h1 className="text-2xl font-bold">Teams</h1>
-                <button type="button"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                        onClick={handleAddTeam}>Add Team
-                </button>
-
+                <Button color="blue" onClick={handleAddTeam}>Add Team</Button>
             </div>
+
             <Table hoverable>
                 <Table.Head>
                     <Table.HeadCell>Team name</Table.HeadCell>
@@ -98,14 +96,14 @@ const TeamsPage = () => {
                     <div>
                         <div className="mb-2 block">
                             <label htmlFor="teamGuild" className="text-sm font-medium text-gray-900 dark:text-white">
-                                Team Tripe/Guild
+                                Team Tribe/Guild
                             </label>
                         </div>
                         <TextInput
                             id="teamGuild"
-                            placeholder="Enter team tripe or guild name"
-                            value={formData.tags}
-                            onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                            placeholder="Enter team tribe or guild name"
+                            value={formData.guild}
+                            onChange={(e) => setFormData({ ...formData, guild: e.target.value })}
                             required={true}
                         />
                     </div>
@@ -117,10 +115,12 @@ const TeamsPage = () => {
                         </div>
                         <Multiselect
                             id="teamMembers"
-                            options={options}
-                            selectedValues={formData.members}
+                            options={options.filter(opt => !selectedValues.includes(opt))}
                             displayValue="name"
-                            onSelect={(list, value) => setFormData({...formData, members: [...formData.members, value]})}/>
+                            selectedValues={formData.members}
+                            onSelect={(list, value) => {
+                                setFormData({...formData, members: [...formData.members, value]})
+                                setSelectedValues([...selectedValues,  value])}}/>
                     </div>
                     <div className="w-full">
                         <Button type="submit">Create Team</Button>

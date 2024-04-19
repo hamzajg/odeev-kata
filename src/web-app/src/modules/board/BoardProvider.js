@@ -23,20 +23,86 @@ const BoardsProvider = ({ children }) => {
                 updatedAt: new Date().toISOString()
             };
             setBoards(updatedBoards);
+            putBoard({...updatedBoards[existingBoardIndex], nodes: JSON.stringify(updatedBoards[existingBoardIndex].nodes), edges: JSON.stringify(updatedBoards[existingBoardIndex].edges)})
+
         } else {
             newBoard.createdAt = new Date().toISOString();
             newBoard.updatedAt = new Date().toISOString();
             setBoards([...boards, newBoard]);
+            postBoard({...newBoard, nodes: JSON.stringify(newBoard.nodes), edges: JSON.stringify(newBoard.edges)})
         }
     };
+
+    const postBoard = async (newBoard) => {
+        try {
+            const response = await fetch('http://localhost:8081/boards', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBoard),
+            });
+
+            if (response.ok) {
+                console.error('Board added:');
+            } else {
+                console.error('Error adding board:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding board:', error);
+        }
+    }
+
+    const putBoard = async (updatedBoard) => {
+        try {
+            const response = await fetch(`http://localhost:8081/boards/${updatedBoard.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedBoard),
+            });
+
+            if (response.ok) {
+                console.error('Board added:');
+            } else {
+                console.error('Error adding board:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding board:', error);
+        }
+    }
+
+    useEffect(() => {
+        const fetchBoards = async () => {
+            try {
+                const response = await fetch('http://localhost:8081/boards');
+                if (response.ok) {
+                    const fetchedBoards = await response.json();
+                    setBoards(fetchedBoards.map(board => ({
+                        ...board,
+                        nodes: JSON.parse(board.nodes),
+                        edges: JSON.parse(board.edges),
+                    })));
+                } else {
+                    console.error('Error fetching boards:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching boards:', error);
+            }
+        };
+
+        fetchBoards();
+    }, []);
 
     const findBoardById = (id) => {
         return boards.find(board => board.id === id);
     }
 
-    const generateJsonModel = (id, nodes, edges) => {
+    const generateJsonModel = (id, diagramId, nodes, edges) => {
         const model = {
             id: id,
+            diagramId: diagramId,
             nodes: nodes.map(({ id, type, data, position, sourcePosition, targetPosition, style }) => ({
                 id,
                 type,
@@ -54,13 +120,14 @@ const BoardsProvider = ({ children }) => {
         };
     };
 
-    const saveFlowModel = (id, nodes, edges) => {
+    const saveFlowModel = (id, diagramId, nodes, edges) => {
         const model = {
             id: id,
+            diagramId: diagramId,
             nodes: nodes,
             edges: edges,
         };
-        generateJsonModel(id, nodes, edges);
+        generateJsonModel(id, diagramId, nodes, edges);
         addOrUpdateBoard(model);
     };
 

@@ -122,7 +122,6 @@ const ProjectsPage = () => {
                             id="projectTeams"
                             options={tags}
                             displayValue="name"
-                            selectedValues={formData.tags}
                             onSelect={(list, value) => setFormData({...formData, tags: [...formData.tags, value]})}/>
                     </div>
 
@@ -137,7 +136,6 @@ const ProjectsPage = () => {
                             id="projectTeams"
                             options={teams}
                             displayValue="name"
-                            selectedValues={formData.teamMembers}
                             onSelect={(list, value) => setFormData({...formData, teamMembers: [...formData.teamMembers, value]})}/>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
