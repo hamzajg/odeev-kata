@@ -274,14 +274,15 @@ Whether it's IDEs, project management software, collaboration platforms, or mode
 providing users with a unified solution that meets their diverse needs. 
 By offering a one-stop-shop for essential tools and functionalities, the platform enhances user productivity, fosters collaboration,
 and simplifies the development process.
-### Web
-- https://domorobo.to/
-- https://prooph-board.com/
-- https://www.modelmycode.com/
 
-### VSCode Extension
-- OpenAPI Spec Swagger
-- Draw.io
+- Here a list of existing tools both on the Web and VSCode:
+  - Web
+    - https://domorobo.to/
+    - https://prooph-board.com/
+    - https://www.modelmycode.com/
+  - VSCode Extension
+    - OpenAPI Spec Swagger
+    - Draw.io
 
 ## Dedicated AI for Design & Code Generation
 
@@ -295,6 +296,7 @@ By training AI models on proprietary datasets and project-specific contexts, use
 to better align with their unique needs and domain-specific challenges. 
 Additionally, local AI models provide greater control over the training process and enable users to iterate 
 and refine their models based on real-world feedback and insights.
+
 ## PoC
 ### Overview
 
