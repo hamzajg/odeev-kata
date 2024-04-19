@@ -2,9 +2,9 @@
 
 Welcome to the Odeev kata Challenge Solution Proposal Repository, Kata description here [Odeev Kata](https://katasintegraodeev.notion.site/KATA-Sintegra-Odeev-70ca32a01bd44ab59a97956095f3dd70), 
 this repository will serve as an exploration logs, will go over the overall solution discovery, 
-enumerating the different challenges, solutions options and trade-off.\
+enumerating the different challenges, solutions options and trade-off.  
 Also will try to deliver the architecture and a working PoC of the solution, plus the supported architecture and 
-practices that can be applied to the generated solutions project.
+practices that can be applied to the generated solutions project.  
 Will try to present a Pragmatic and Evolutionary Solution Architecture, from integrating with existing tools, 
 custom Web App Tool, IDE Extension like (VSCode, JetBrains IDEs), console CLI commands tool.
 
@@ -40,6 +40,58 @@ It provides additional functionalities, such as code navigation, debugging suppo
 The command-line interface (CLI) tool offers a convenient way to interact with the solution from the terminal. 
 It allows developers to perform various tasks, such as project scaffolding, dependency management, and deployment, all from the command line.
 
+## Technical challenges, solutions & Trade-off
+Here an overview detailing the technical challenges encountered, innovative solutions implemented, 
+and the trade-offs made during the project lifecycle, providing insights into the decision-making process and outcomes.
+
+### Architecture & Modeling:
+#### Business Oriented VS Technical Design model:
+Focusing on a business-oriented design model, such as Domain-Driven Design (DDD), rather than a technical design model 
+like JHipster Entity diagram, enables alignment with business objectives and enhances scalability.  
+By generating technical diagram models based on the business model, the platform streamlines development, 
+ensuring coherence between business requirements and technical implementation.
+
+#### Combine Bottom-Up & Top-Down Design models:
+Leveraging both bottom-up and top-down design approaches, enabling a holistic solution discovery process. 
+Bottom-up design focuses on problem-solving and meeting business acceptance criteria by starting with technical details 
+and gradually refining them to align with business objectives.   
+Top-down design, on the other hand, begins with high-level business requirements and iteratively drills down 
+to technical implementation details.
+
+By combining these approaches, the platform ensures comprehensive coverage of both business needs and technical feasibility, 
+resulting in effective problem-solving and solution delivery.
+
+#### Collaboration & Version control:
+The business-oriented model fosters collaboration across the entire team and business stakeholders 
+by providing a common language and understanding of domain concepts.  
+This approach enables effective communication, encourages shared ownership of the solution, 
+and ensures that business goals drive technical decisions, resulting in a more cohesive and aligned development process.
+
+By using a business model as the foundation, the platform can automatically generate technical models, 
+ensuring consistency and accuracy in translating business requirements into technical specifications. 
+This process streamlines development efforts, reduces manual errors, and provides a clear audit trail for tracking changes, 
+enhancing version control and collaboration among team members.
+
+### Evolution of Generation Model & migration
+By employing JSON as the model persistence format, the platform enables seamless evolution of the model 
+and smooth migration of old existing models to new versions.  
+JSON's flexibility allows for easy addition or modification of fields, making it conducive to accommodating 
+changes in the model over time.  
+Additionally, its human-readable and lightweight nature simplifies debugging and troubleshooting.  
+With JSON, the platform ensures compatibility and interoperability across different versions of the model, 
+facilitating efficient evolution and migration processes.
+
+### Code Generation:
+Using template markup tools like Apache FreeMarker or Microsoft T4 text template will enable efficient code generation, 
+allowing developers to rapidly scaffold code based on predefined templates.  
+Additionally, the integration of AI-driven code completion, review, and refactoring capabilities enhances 
+developer productivity and code quality.  
+By leveraging AI algorithms, the platform provides intelligent suggestions, automates routine coding tasks, 
+and identifies potential code smells or optimizations, thereby streamlining the development process 
+and improving code maintainability.
+
+### Supporting many architecture styles, patterns, platform languages & technologies:
+
 ## Solution Overview
 ```mermaid
 graph LR;
@@ -57,7 +109,7 @@ graph LR;
 Our solution aims to provide a comprehensive and integrated platform that empowers developers, architects, 
 and teams to streamline their software development workflows, enhance collaboration, and accelerate project delivery. 
 At the core of our solution is a modular monolithic architecture, chosen for its balance of simplicity, scalability, 
-and maintainability. 
+and maintainability.  
 While microservices architectures offer benefits in terms of flexibility and scalability, 
 they also introduce complexity and operational overhead, which may not be necessary for all projects. 
 By opting for a modular monolithic architecture, we strike a pragmatic balance, enabling rapid development 
@@ -99,7 +151,6 @@ graph TD;
 
     Service --> DB;
     Gateway --> Service;
-
 ```
 
 - Microservices Architecture
@@ -293,7 +344,7 @@ depending on their specific requirements and preferences.
 
 Private and locally trained AI models offer several advantages, including enhanced privacy and security for sensitive data and projects. 
 By training AI models on proprietary datasets and project-specific contexts, users can fine-tune the AI's capabilities 
-to better align with their unique needs and domain-specific challenges. 
+to better align with their unique needs and domain-specific challenges.  
 Additionally, local AI models provide greater control over the training process and enable users to iterate 
 and refine their models based on real-world feedback and insights.
 

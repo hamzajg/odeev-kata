@@ -12,10 +12,9 @@ const SolutionsTemplateBoilerplate = () => {
     const onNodeSelected = (node) => {
         setSelectedFileName(node.element.name)
     }
-    return (
-        <div style={{display: 'flex', justifyContent: 'space-between'}} className="mb-2">
-            <div style={{width: '49%'}}>
-                <Card>
+    return (<>
+            <div className="flex justify-between gap-2 mb-2">
+                <Card className="w-full">
                     <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Layered Architecture Solution Template Boilerplate - Java
                     </h3>
@@ -28,9 +27,7 @@ const SolutionsTemplateBoilerplate = () => {
                         </div>
                     </div>
                 </Card>
-            </div>
-            <div style={{width: '49%'}}>
-                <Card>
+                <Card className="w-full">
                     <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                         Layered Architecture Solution Template Boilerplate - .NET Core
                     </h3>
@@ -42,10 +39,104 @@ const SolutionsTemplateBoilerplate = () => {
                             <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
                         </div>
                     </div>
-
+                </Card>
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Layered Architecture Solution Template Boilerplate - Typescript
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                        </div>
+                    </div>
                 </Card>
             </div>
-        </div>
+            <div className="flex justify-between gap-2 mb-2">
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Onion/Clean Architecture Solution Template Boilerplate - Java
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureJava} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentJava} fileName={selectedFileName}/>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Onion/Clean Architecture Solution Template Boilerplate - .NET Core
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Onion/Clean Architecture Solution Template Boilerplate - Typescript
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                        </div>
+                    </div>
+                </Card>
+            </div>
+            <div className="flex justify-between gap-2 mb-2">
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Port & Adapter Architecture Solution Template Boilerplate - Java
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureJava} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentJava} fileName={selectedFileName}/>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Port & Adapter Architecture Solution Template Boilerplate - .NET Core
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                        </div>
+                    </div>
+                </Card>
+                <Card className="w-full">
+                    <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Port & Adapter Architecture Solution Template Boilerplate - Typescript
+                    </h3>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <div style={{width: '30%'}}>
+                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                        </div>
+                        <div style={{width: '76%'}}>
+                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                        </div>
+                    </div>
+                </Card>
+            </div>
+        </>
     )
 }
 export default SolutionsTemplateBoilerplate;

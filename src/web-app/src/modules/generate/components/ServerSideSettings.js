@@ -57,6 +57,11 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                        onChange={e => setSettings({...settings, targetPlatform: e.target.id})}/>
                 <Label htmlFor="dot-net">.NET</Label>
             </div>
+            <div className="flex items-center gap-2">
+                <Radio id="javascript" name="targetPlatform" value="Javascript"
+                       onChange={e => setSettings({...settings, targetPlatform: e.target.id})}/>
+                <Label htmlFor="javascript">Javascript</Label>
+            </div>
         </div>
         {settings.targetPlatform && <div style={{width: '48%'}}>
             <Label htmlFor="targetLanguage">
@@ -84,6 +89,18 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                     <Radio id="f-sharp" name="targetLanguage" value="F#"
                            onChange={e => setSettings({...settings, targetLanguage: e.target.id})}/>
                     <Label htmlFor="f-sharp">F#</Label>
+                </div>
+            </>}
+            {settings.targetPlatform === "javascript" && <>
+                <div className="flex items-center gap-2">
+                    <Radio id="c-sharp" name="targetLanguage" value="Javascript"
+                           onChange={e => setSettings({...settings, targetLanguage: e.target.id})}/>
+                    <Label htmlFor="c-sharp">Javascript</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="typescript" name="targetLanguage" value="Typescript"
+                           onChange={e => setSettings({...settings, targetLanguage: e.target.id})}/>
+                    <Label htmlFor="typescript">Typescript</Label>
                 </div>
             </>}
         </div>}
