@@ -17,10 +17,10 @@ import AIChatDialog from "./components/AIChatDialog";
 import {BoardsContext} from "./BoardProvider";
 import {DiagramsContext} from "../diagrams/DiagramProvider";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-
-const nodeTypes = {custom: (props) => <CustomNode {...props}/>};
+import colors from "tailwindcss/colors";
 
 // we define the nodeTypes outside of the component to prevent re-renderings
+const nodeTypes = {custom: (props) => <CustomNode {...props}/>};
 function BoardPage() {
     const {id} = useParams();
     const {saveFlowModel, findBoardById, handleSaveDiagramAsCodeChange} = useContext(BoardsContext);
@@ -69,8 +69,8 @@ function BoardPage() {
         setDiagramCode(event.target.value);
         try {
             const parsedFlow = JSON.parse(event.target.value);
-            setNodes(parsedFlow.board.nodes);
-            setEdges([]);
+            setNodes(parsedFlow);
+            saveFlowModel(id, diagram.id, parsedFlow, edges);
         } catch (error) {
             console.error('Error parsing JSON:', error);
         }
