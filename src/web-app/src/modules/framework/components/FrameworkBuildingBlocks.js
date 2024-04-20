@@ -14,12 +14,8 @@ const FrameworkBuildingBlocks = () => {
         )
     }
     const coreContent = {
-        aggregate: (<Content title="Aggrigate" body="Defines a cluster of related objects that are treated as a single unit for data changes."/>),
-        entity: (<Content title="Entity" body="Represents a distinct object with its own identity and lifecycle within the system."/>),
-        factory: (<Content title="Factory" body="Creates complex objects or aggregates with configurable parameters and encapsulated construction logic."/>),
-        repository: (<Content title="Repository" body="Provides an abstraction layer for data access, allowing the application to interact with domain objects without knowledge of the underlying data store."/>),
+        core: (<Content title="Core Domain Model" body="Incuding Aggregate, Entity, Factory, Repository, Use Case"/>),
         service: (<Content title="Service" body="Encapsulates business logic that doesn't naturally fit within an entity or value object, promoting separation of concerns."/>),
-        useCase: (<Content title="Use Case" body="Represents a specific piece of functionality or user goal, guiding interactions between actors and the system."/>),
         event: (<Content title="Event" body="Captures a significant change or occurrence within the system, enabling event-driven architecture and eventual consistency."/>),
         command: (<Content title="Command" body="Encapsulates a request or intention to perform an action, facilitating decoupled communication between components."/>),
         query: (<Content title="Query" body="Represents a request for information from the system, enabling data retrieval and read-only operations."/>),
@@ -50,23 +46,11 @@ const FrameworkBuildingBlocks = () => {
                 </h3>
 
                 <div className="grid grid-cols-6 gap-2">
-                    <Popover content={coreContent.aggregate} trigger="hover">
+                    <Popover content={coreContent.core} trigger="hover">
                         <Button>Aggregate</Button>
-                    </Popover>
-                    <Popover content={coreContent.entity} trigger="hover">
-                        <Button>Entity</Button>
-                    </Popover>
-                    <Popover content={coreContent.factory} trigger="hover">
-                        <Button>Factory</Button>
-                    </Popover>
-                    <Popover content={coreContent.repository} trigger="hover">
-                        <Button>Repository</Button>
                     </Popover>
                     <Popover content={coreContent.service} trigger="hover">
                         <Button>Service</Button>
-                    </Popover>
-                    <Popover content={coreContent.useCase} trigger="hover">
-                        <Button>Use Case</Button>
                     </Popover>
                     <Popover content={coreContent.event} trigger="hover">
                         <Button>Event</Button>

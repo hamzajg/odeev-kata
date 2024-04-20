@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { saveAs } from 'file-saver';
+import {BoardService} from "./BoardService";
 
 const BoardsContext = createContext();
 
@@ -23,76 +23,24 @@ const BoardsProvider = ({ children }) => {
                 updatedAt: new Date().toISOString()
             };
             setBoards(updatedBoards);
-            putBoard({...updatedBoards[existingBoardIndex], nodes: JSON.stringify(updatedBoards[existingBoardIndex].nodes), edges: JSON.stringify(updatedBoards[existingBoardIndex].edges)})
+            BoardService.putBoard({...updatedBoards[existingBoardIndex], nodes: JSON.stringify(updatedBoards[existingBoardIndex].nodes), edges: JSON.stringify(updatedBoards[existingBoardIndex].edges)})
 
         } else {
             newBoard.createdAt = new Date().toISOString();
             newBoard.updatedAt = new Date().toISOString();
             setBoards([...boards, newBoard]);
-            postBoard({...newBoard, nodes: JSON.stringify(newBoard.nodes), edges: JSON.stringify(newBoard.edges)})
+            BoardService.postBoard({...newBoard, nodes: JSON.stringify(newBoard.nodes), edges: JSON.stringify(newBoard.edges)})
         }
     };
 
-    const postBoard = async (newBoard) => {
-        try {
-            const response = await fetch('http://localhost:8081/boards', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newBoard),
-            });
-
-            if (response.ok) {
-                console.error('Board added:');
-            } else {
-                console.error('Error adding board:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding board:', error);
-        }
-    }
-
-    const putBoard = async (updatedBoard) => {
-        try {
-            const response = await fetch(`http://localhost:8081/boards/${updatedBoard.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedBoard),
-            });
-
-            if (response.ok) {
-                console.error('Board added:');
-            } else {
-                console.error('Error adding board:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding board:', error);
-        }
-    }
-
     useEffect(() => {
-        const fetchBoards = async () => {
-            try {
-                const response = await fetch('http://localhost:8081/boards');
-                if (response.ok) {
-                    const fetchedBoards = await response.json();
-                    setBoards(fetchedBoards.map(board => ({
-                        ...board,
-                        nodes: JSON.parse(board.nodes),
-                        edges: JSON.parse(board.edges),
-                    })));
-                } else {
-                    console.error('Error fetching boards:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching boards:', error);
-            }
-        };
-
-        fetchBoards();
+        BoardService.fetchBoards()
+            .then(result =>
+                setBoards(result.map(board => ({
+                    ...board,
+                    nodes: JSON.parse(board.nodes),
+                    edges: JSON.parse(board.edges),
+                }))));
     }, []);
 
     const findBoardById = (id) => {
@@ -135,25 +83,19 @@ const BoardsProvider = ({ children }) => {
         const workspacePath = localStorage.getItem('workspace-path');
         const defaultPath =  workspacePath + "/domain-context-"+ diagram.type +".json";
         window.postMessage({type: "createFile", filePath: "/domain-context-"+ diagram.type +".json", fileContent: diagramCode}, '*');
-
-        if(!workspacePath) {
-            var file = new File([diagramCode], defaultPath, {type: "text/plain;charset=utf-8"});
-            saveAs(file);
-        } else {
-            try {
-                const opts = {
-                    suggestedName: defaultPath
-                };
-                const handle = await window.showSaveFilePicker(opts);
-                const writableStream = await handle.createWritable();
-                await writableStream.write(diagramCode);
-                await writableStream.close();
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('File save operation aborted by the user.');
-                } else {
-                    console.error('Error saving file:', error);
-                }
+        try {
+            const opts = {
+                suggestedName: defaultPath
+            };
+            const handle = await window.showSaveFilePicker(opts);
+            const writableStream = await handle.createWritable();
+            await writableStream.write(diagramCode);
+            await writableStream.close();
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                console.log('File save operation aborted by the user.');
+            } else {
+                console.error('Error saving file:', error);
             }
         }
     };

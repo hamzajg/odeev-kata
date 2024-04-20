@@ -18,7 +18,9 @@ const ProjectsPage = () => {
     const projects = findProjectsBySolutionId(id)
     const {teams} = useContext(TeamContext);
     const [formData, setFormData] = useState({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
-    const tags = [{name: "DDD", id: 1}, {name: "Clean Architecture", id: 2}]
+    const [selectedValues, setSelectedValues] = useState([]);
+    const [tags, setTags] = useState([{name: "DDD", id: 1}, {name: "Clean Architecture", id: 2}])
+
     const handleAddProject = () => {
         setShowRightPanel(true);
     };
@@ -28,6 +30,7 @@ const ProjectsPage = () => {
         console.log('Form submitted:', formData);
         addProject(formData);
         setFormData({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
+        setSelectedValues([])
         setShowRightPanel(false);
     };
 
@@ -119,10 +122,14 @@ const ProjectsPage = () => {
                             </label>
                         </div>
                         <Multiselect
-                            id="projectTeams"
-                            options={tags}
+                            id="projectTags"
+                            options={tags.filter(opt => !selectedValues.includes(opt))}
                             displayValue="name"
-                            onSelect={(list, value) => setFormData({...formData, tags: [...formData.tags, value]})}/>
+                            selectedValues={formData.tags}
+                            onSelect={(list, value) => {
+                                setFormData({...formData, tags: [...formData.tags, value]})
+                                setSelectedValues([...selectedValues, value])
+                            }}/>
                     </div>
 
                     <div>
@@ -134,9 +141,13 @@ const ProjectsPage = () => {
 
                         <Multiselect
                             id="projectTeams"
-                            options={teams}
+                            options={teams.filter(opt => !selectedValues.includes(opt))}
                             displayValue="name"
-                            onSelect={(list, value) => setFormData({...formData, teamMembers: [...formData.teamMembers, value]})}/>
+                            selectedValues={formData.teamMembers}
+                            onSelect={(list, value) => {
+                                setFormData({...formData, teamMembers: [...formData.teamMembers, value]})
+                                setSelectedValues([...selectedValues, value])
+                            }}/>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
                         <Button type="submit">Create Project</Button>

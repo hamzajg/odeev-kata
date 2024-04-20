@@ -17,8 +17,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @OpenAPIDefinition(
 		info = @Info(
 				contact = @Contact(name = "Hamza Jguerim", email = "hamzajg@gmail.com", url = "https://github.com/hamzajg"),
-				description = "Odeev Kata REST APIS",
-				title = "Odeev Kata REST APIS",
+				description = "Odeev Kata REST APIs",
+				title = "Odeev Kata REST APIs",
 				version = "1.0"
 		),
 		servers = {

@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import {TeamService} from "./TeamService";
 
 const TeamContext = createContext();
 
@@ -16,46 +17,12 @@ const TeamProvider = ({ children }) => {
     const addTeam = (newTeam) => {
         newTeam.id = uuidv4();
         setTeams([...teams, newTeam]);
-        postTeam(newTeam)
-    };
-
-    const postTeam = async (newTeam) => {
-        try {
-            const response = await fetch('http://localhost:8081/teams', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newTeam),
-            });
-
-            if (response.ok) {
-                console.error('Team added:');
-            } else {
-                console.error('Error adding team:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding team:', error);
-        }
+        TeamService.postTeam(newTeam)
     };
 
     useEffect(() => {
-        const fetchTeams = async () => {
-            try {
-                const response = await fetch('http://localhost:8081/teams');
-
-                if (response.ok) {
-                    const fetchedTeams = await response.json();
-                    setTeams(fetchedTeams);
-                } else {
-                    console.error('Error fetching teams:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching teams:', error);
-            }
-        };
-
-        fetchTeams();
+        TeamService.fetchTeams()
+            .then(setTeams);
     }, []);
 
     const removeTeam = (id) => {

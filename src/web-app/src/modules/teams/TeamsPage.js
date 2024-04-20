@@ -6,7 +6,7 @@ import Multiselect from 'multiselect-react-dropdown';
 
 const TeamsPage = () => {
     const [showRightPanel, setShowRightPanel] = useState(false);
-    const { addTeam, teams } = useContext(TeamContext);
+    const {addTeam, teams} = useContext(TeamContext);
     const [formData, setFormData] = useState({id: '', name: '', description: '', guild: '', members: []});
     const [options, setOptions] = useState([{name: "Hamza Jguerim", id: 1}, {name: "Joe Doe", id: 2}]);
     const [selectedValues, setSelectedValues] = useState([]);
@@ -74,13 +74,14 @@ const TeamsPage = () => {
                             id="teamName"
                             placeholder="Enter team name"
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            onChange={(e) => setFormData({...formData, name: e.target.value})}
                             required={true}
                         />
                     </div>
                     <div>
                         <div className="mb-2 block">
-                            <label htmlFor="teamDescription" className="text-sm font-medium text-gray-900 dark:text-white">
+                            <label htmlFor="teamDescription"
+                                   className="text-sm font-medium text-gray-900 dark:text-white">
                                 Team Description
                             </label>
                         </div>
@@ -88,7 +89,7 @@ const TeamsPage = () => {
                             id="teamDescription"
                             placeholder="Enter team description"
                             value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                            onChange={(e) => setFormData({...formData, description: e.target.value})}
                             rows={3}
                             required={true}
                         />
@@ -103,7 +104,7 @@ const TeamsPage = () => {
                             id="teamGuild"
                             placeholder="Enter team tribe or guild name"
                             value={formData.guild}
-                            onChange={(e) => setFormData({ ...formData, guild: e.target.value })}
+                            onChange={(e) => setFormData({...formData, guild: e.target.value})}
                             required={true}
                         />
                     </div>
@@ -120,9 +121,10 @@ const TeamsPage = () => {
                             selectedValues={formData.members}
                             onSelect={(list, value) => {
                                 setFormData({...formData, members: [...formData.members, value]})
-                                setSelectedValues([...selectedValues,  value])}}/>
+                                setSelectedValues([...selectedValues, value])
+                            }}/>
                     </div>
-                    <div className="w-full">
+                    <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
                         <Button type="submit">Create Team</Button>
                     </div>
                 </form>

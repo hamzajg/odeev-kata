@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { saveAs } from 'file-saver';
+import {SolutionService} from "./SolutionService";
 
 const SolutionContext = createContext();
 
@@ -17,46 +17,12 @@ const SolutionProvider = ({ children }) => {
     const addSolution = (newSolution) => {
         newSolution.id = uuidv4();
         setSolutions([...solutions, newSolution]);
-        postSolution(newSolution)
-    };
-
-    const postSolution = async (newSolution) => {
-        try {
-            const response = await fetch('http://localhost:8081/solutions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newSolution),
-            });
-
-            if (response.ok) {
-                console.error('Solution added:');
-            } else {
-                console.error('Error adding solution:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding solution:', error);
-        }
+        SolutionService.postSolution(newSolution)
     };
 
     useEffect(() => {
-        const fetchSolutions = async () => {
-            try {
-                const response = await fetch('http://localhost:8081/solutions');
-
-                if (response.ok) {
-                    const fetchedSolutions = await response.json();
-                    setSolutions(fetchedSolutions);
-                } else {
-                    console.error('Error fetching solutions:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error fetching solutions:', error);
-            }
-        };
-
-        fetchSolutions();
+        SolutionService.fetchSolutions()
+            .then(setSolutions);
     }, []);
 
     const findSolutionById = (id) => {
@@ -76,8 +42,8 @@ const SolutionProvider = ({ children }) => {
     }
 
     const handleSaveMetadata = async (project, settings) => {
-        const defaultPath = localStorage.getItem('workspace-path') + "/metadata.json";
-        const from = localStorage.getItem('from');
+        const workspacePath = localStorage.getItem('workspace-path');
+        const defaultPath =  workspacePath + "/metadata.json";
         const metadata = {...project,
             frameworkVersion: "1.0.0",
             settings: settings,
@@ -87,24 +53,19 @@ const SolutionProvider = ({ children }) => {
         }
         const metadataContent = JSON.stringify(metadata, undefined, 2);
         window.postMessage({type: "createFile", filePath: "/metadata.json", fileContent: metadataContent}, '*');
-        if(from) {
-            var file = new File([metadataContent], defaultPath, {type: "text/plain;charset=utf-8"});
-            saveAs(file);
-        } else {
-            try {
-                const opts = {
-                    suggestedName: defaultPath
-                };
-                const handle = await window.showSaveFilePicker(opts);
-                const writableStream = await handle.createWritable();
-                await writableStream.write(metadataContent);
-                await writableStream.close();
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('File save operation aborted by the user.');
-                } else {
-                    console.error('Error saving file:', error);
-                }
+        try {
+            const opts = {
+                suggestedName: defaultPath
+            };
+            const handle = await window.showSaveFilePicker(opts);
+            const writableStream = await handle.createWritable();
+            await writableStream.write(metadataContent);
+            await writableStream.close();
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                console.log('File save operation aborted by the user.');
+            } else {
+                console.error('Error saving file:', error);
             }
         }
     };
