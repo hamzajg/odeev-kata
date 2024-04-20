@@ -29,23 +29,63 @@ const ClientSideSettings = ({settings, setSettings}) => <>
             <Label htmlFor="targetClientPlatformSettings">
                 Target Client Platform
             </Label>
-            <div className="flex items-center gap-2">
-                <Radio id="react-js" name="targetClientPlatformSettings" value="React JS"
-                       onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                <Label htmlFor="react-js">React JS</Label>
-            </div>
+            {(!settings.targetClientPlatformTypeSettings || settings.targetClientPlatformTypeSettings === 'web') && <>
+                <div className="flex items-center gap-2">
+                    <Radio id="react-js" name="targetClientPlatformSettings" value="React JS"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="react-js">React JS</Label>
+                </div>
 
-            <div className="flex items-center gap-2">
-                <Radio id="angular" name="targetClientPlatformSettings" value="Angular"
-                       onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                <Label htmlFor="angular">Angular</Label>
-            </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="angular" name="targetClientPlatformSettings" value="Angular"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="angular">Angular</Label>
+                </div>
 
-            <div className="flex items-center gap-2">
-                <Radio id="vue-js" name="targetClientPlatformSettings" value="Vue JS"
-                       onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                <Label htmlFor="vue-js">Vue JS</Label>
-            </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="vue-js" name="targetClientPlatformSettings" value="Vue JS"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="vue-js">Vue JS</Label>
+                </div>
+            </>}
+            {settings.targetClientPlatformTypeSettings === 'mobile' && <>
+                <div className="flex items-center gap-2">
+                    <Radio id="android" name="targetClientPlatformSettings" value="Android"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="android">Android</Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Radio id="ios" name="targetClientPlatformSettings" value="iOS"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="ios">iOS</Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Radio id="react-native" name="targetClientPlatformSettings" value="React Native (Cross Platform)"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="vue-js">React Native (Cross Platform)</Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Radio id="flutter" name="targetClientPlatformSettings" value="Flutter (Cross Platfrom)"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="flutter">Flutter</Label>
+                </div>
+            </>}
+            {settings.targetClientPlatformTypeSettings === 'desktop' && <>
+                <div className="flex items-center gap-2">
+                    <Radio id="java-fx" name="targetClientPlatformSettings" value="Java FX"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="java-fx">Java FX</Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Radio id="microsoft-uwp" name="targetClientPlatformSettings" value=">Microsoft UWP"
+                           onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
+                    <Label htmlFor="microsoft-uwp">Microsoft UWP</Label>
+                </div>
+            </>}
         </div>
     </div>
 </>

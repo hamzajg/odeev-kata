@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import { Uri, WebviewPanel, WebviewOptions } from 'vscode';
 import * as fs from "fs";
+import * as archiver from 'archiver';
+
 const workspaceFolders = vscode.workspace.workspaceFolders;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -40,7 +42,19 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
             const fileContent = message.fileContent;
             const filePath = message.filePath;
             fs.writeFileSync(workspacePath + filePath, fileContent);
+            const fileExtension = (workspacePath + filePath).split('.').pop();
             console.log('File saved successfully!');
+            if (fileExtension === 'zip') {
+                const outputPath = (workspacePath + filePath).replace('.zip', '');
+                const archive = archiver('zip', { zlib: { level: 9 } });
+                archive.pipe(fs.createWriteStream(outputPath));
+                archive.file((workspacePath + filePath), { name: (workspacePath + filePath) });
+                archive.finalize();
+
+                console.error(`Unzipped file to ${outputPath}`);
+            } else {
+                console.error('Please select a ZIP file.');
+            }
         } else {
             console.error('No workspace opened in VS Code.');
         }

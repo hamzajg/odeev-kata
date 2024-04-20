@@ -36,5 +36,8 @@
     "@types/vscode": "^1.73.0",
     "typescript": "^5.4.2",
     "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1"
   }
 }

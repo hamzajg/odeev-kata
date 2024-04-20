@@ -220,7 +220,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                            ...settings,
                            targetCommunicationProtocol: e.target.id
                        })}/>
-                <Label htmlFor="object-method-call">Object Method Call</Label>
+                <Label htmlFor="object-method-call">Direct Method Call</Label>
             </div>
             <div className="flex items-center gap-2">
                 <Radio id="http" name="targetCommunicationProtocol" value="HTTP"
@@ -288,6 +288,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
             <Label htmlFor="targetDatabaseTechnologies">
                 Target Database Technologies
             </Label>
+            {settings.targetDatabaseOptions !== 'sql' && <>
             <div className="flex items-center gap-2">
                 <Radio id="event-store" name="targetDatabaseTechnologies" value="Event Store"
                        onChange={e => setSettings({
@@ -296,6 +297,14 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                        })}/>
                 <Label htmlFor="event-store">Event Store</Label>
             </div>
+            <div className="flex items-center gap-2">
+                <Radio id="mongo-db" name="targetDatabaseTechnologies" value="MongoDB"
+                       onChange={e => setSettings({
+                           ...settings,
+                           targetDatabaseTechnologies: e.target.id
+                       })}/>
+                <Label htmlFor="mongo-db">MongoDB</Label>
+            </div></>}
             {settings.targetDatabaseOptions === 'sql' && <>
                 <div className="flex items-center gap-2">
                     <Radio id="my-sql" name="targetDatabaseTechnologies" value="MySQL"
@@ -314,14 +323,6 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                     <Label htmlFor="ms-sql">Microsoft SQL Server</Label>
                 </div>
             </>}
-            <div className="flex items-center gap-2">
-                <Radio id="mongo-db" name="targetDatabaseTechnologies" value="MongoDB"
-                       onChange={e => setSettings({
-                           ...settings,
-                           targetDatabaseTechnologies: e.target.id
-                       })}/>
-                <Label htmlFor="mongo-db">MongoDB</Label>
-            </div>
         </div>}
     </div>
     <div style={{display: 'flex', justifyContent: 'space-between'}}>

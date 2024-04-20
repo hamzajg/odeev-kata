@@ -1,9 +1,10 @@
 const SolutionService = {
     postSolution,
-    fetchSolutions
+    fetchSolutions,
+    callSwaggerCodeGen
 }
 
-async function postSolution (newSolution) {
+async function postSolution(newSolution) {
     try {
         const response = await fetch('http://localhost:8081/solutions', {
             method: 'POST',
@@ -23,7 +24,7 @@ async function postSolution (newSolution) {
     }
 }
 
-async function fetchSolutions () {
+async function fetchSolutions() {
     try {
         const response = await fetch('http://localhost:8081/solutions');
 
@@ -34,6 +35,27 @@ async function fetchSolutions () {
         }
     } catch (error) {
         console.error('Error fetching solutions:', error);
+    }
+}
+
+async function callSwaggerCodeGen(metadata) {
+    try {
+        const response = await fetch('http://localhost:8081/generators', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(metadata),
+        });
+
+        if (response.ok) {
+            return response.blob();
+            console.error('Project generated:');
+        } else {
+            console.error('Error generating project:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error generating project:', error);
     }
 }
 

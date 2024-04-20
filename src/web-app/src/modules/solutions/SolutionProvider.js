@@ -38,7 +38,27 @@ const SolutionProvider = ({ children }) => {
             domainSpecificationModelFilePath: "domain-context-specification-by-example.json",
         }
         const metadataContent = JSON.stringify(metadata, undefined, 2);
-        window.postMessage({type: "createProject", filePath: "/metadata.json", fileContent: metadataContent}, '*');
+        try {
+            const response = await SolutionService.callSwaggerCodeGen(metadata)
+            window.postMessage({type: "createProject", filePath: "/"+project.name + ".zip", fileContent: response}, '*');
+            try {
+                const opts = {
+                    suggestedName: project.name + ".zip"
+                };
+                const handle = await window.showSaveFilePicker(opts);
+                const writableStream = await handle.createWritable();
+                await writableStream.write(response);
+                await writableStream.close();
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log('File save operation aborted by the user.');
+                } else {
+                    console.error('Error saving file:', error);
+                }
+            }
+        } catch (error) {
+            console.error('Error downloading file:', error);
+        }
     }
 
     const handleSaveMetadata = async (project, settings) => {
