@@ -164,7 +164,7 @@ function BoardPage() {
                                     <Accordion.Title>Diagram as Code</Accordion.Title>
                                     <Accordion.Content>
                                         <Button className="aling-right mb-2" onClick={() => handleSaveDiagramAsCodeChange(diagram, diagramCode)}>Save</Button>
-                                        <CodeEditor
+                                        <CodeEditor className="h-screen"
                                             value={diagramCode}
                                             language="json"
                                             placeholder="type code here or diagram code will generated here"
@@ -173,7 +173,6 @@ function BoardPage() {
                                             rows={50}
                                             style={{
                                                 backgroundColor: "#333",
-                                                maxHeight: "100%",
                                                 fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace'
                                             }}
                                         />

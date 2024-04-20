@@ -9,7 +9,7 @@ services:
     volumes:
       - ./data/ollama:/root/.ollama
     ports:
-      - 11434:11434
+      - "11434:11434"
     environment:
       - OLLAMA_MODEL=mistral
       - OLLAMA_WEB_UI_ENABLED=true
@@ -19,7 +19,7 @@ services:
     expose:
       - 8080/tcp
     ports:
-      - 8082:8080/tcp
+      - "8082:8080/tcp"
     environment:
       - OLLAMA_API_BASE_URL=http://ollama-container:11434/api
     volumes:
