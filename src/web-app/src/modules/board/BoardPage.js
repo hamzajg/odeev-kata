@@ -70,22 +70,29 @@ function BoardPage() {
         try {
             const parsedFlow = JSON.parse(event.target.value);
             setNodes(parsedFlow);
+            setEdges([])
             saveFlowModel(id, diagram.id, parsedFlow, edges);
         } catch (error) {
             console.error('Error parsing JSON:', error);
         }
     };
 
-    const onNodesChanged = (node) => {
-        onNodesChange(node);
-        saveFlowModel(id, diagram.id, nodes, edges);
-        setDiagramCode(JSON.stringify(nodes, undefined, 2))
+    const onNodesChanged = (events) => {
+        onNodesChange(events);
+        events.
+        filter(event => event.type !== 'remove').
+        forEach(() => {
+            saveFlowModel(id, diagram.id, nodes, edges);
+            setDiagramCode(JSON.stringify(nodes, undefined, 2))
+        })
     }
 
     const onNodesDeleted = (deletedNode) => {
-        setNodes(deleteElements(nodes, deletedNode));
-        saveFlowModel(id, nodes, edges);
-        setDiagramCode(JSON.stringify(nodes, undefined, 2))
+        const newNodes = deleteElements(nodes, deletedNode);
+        setNodes(newNodes);
+        setEdges([])
+        saveFlowModel(id, diagram.id, newNodes, edges);
+        setDiagramCode(JSON.stringify(newNodes, undefined, 2))
     }
 
     const deleteElements = (origin, toDelete) => {
