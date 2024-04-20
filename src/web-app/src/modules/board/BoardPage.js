@@ -100,7 +100,7 @@ function BoardPage() {
     }
 
     return (
-        <div className="flex h-full">
+        <div className="flex h-screen">
             <div className="w-64 bg-gray-800 text-white">
                 <Sidebar>
                     <Sidebar.Logo href="#" img="" className="tracking-tight text-gray-900 dark:text-white">
@@ -133,7 +133,6 @@ function BoardPage() {
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}
                     onInit={onInit}
-                    className="h-full"
                     snapToGrid={true}
                     snapGrid={[15, 15]}
                     nodeTypes={nodeTypes}
@@ -155,7 +154,7 @@ function BoardPage() {
                 </ReactFlow>
             </div>
 
-            <div className="w-64 bg-gray-800 text-white h-screen">
+            <div className="w-64 bg-gray-800 text-white">
                 <Sidebar>
                     <Sidebar.Items>
                         <Sidebar.ItemGroup>
