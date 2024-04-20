@@ -3,7 +3,7 @@ import React from "react";
 
 const ServerSideSettings = ({settings, setSettings}) => <>
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetSolutionType">
                 Target Solution Type
             </Label>
@@ -19,7 +19,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="integration">Integration</Label>
             </div>
         </div>
-        {settings.targetSolutionType === 'integration' && <div style={{width: '48%'}}>
+        {settings.targetSolutionType === 'integration' && <div style={{width: '38%'}}>
             <Label htmlFor="targetIntegrationPlatform">
                 Target Integration Platform (Finance Domain)
             </Label>
@@ -48,10 +48,12 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="salesforce">Salesforce</Label>
             </div>
         </div>}
+        <div style={{width: '38%'}}>
+        </div>
     </div>
 
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetPlatform">
                 Target Platform
             </Label>
@@ -71,7 +73,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="javascript">Javascript</Label>
             </div>
         </div>
-        {settings.targetPlatform && <div style={{width: '48%'}}>
+        {settings.targetPlatform && <div style={{width: '38%'}}>
             <Label htmlFor="targetLanguage">
                 Target Language
             </Label>
@@ -112,10 +114,49 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 </div>
             </>}
         </div>}
+        {settings.targetPlatform && <div style={{width: '38%'}}>
+            <Label htmlFor="targetFramework">
+                Target Framework
+            </Label>
+            {settings.targetPlatform === "jvm" && <>
+                <div className="flex items-center gap-2">
+                    <Radio id="spring" name="targetFramework" value="Spring Boot"
+                           onChange={e => setSettings({...settings, targetFramework: e.target.id})}/>
+                    <Label htmlFor="spring">Spring Boot</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="quarkus" name="targetLanguageStyle" value="Quarkus"
+                           onChange={e => setSettings({...settings, targetFramework: e.target.id})}/>
+                    <Label htmlFor="quarkus">Quarkus</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="mincronaut" name="targetFramework" value="Micronaut"
+                           onChange={e => setSettings({...settings, targetFramework: e.target.id})}/>
+                    <Label htmlFor="mincronaut">Micronaut</Label>
+                </div>
+            </>}
+            {settings.targetPlatform === "dot-net" && <div className="flex items-center gap-2">
+                <Radio id="aspnetcore" name="targetFramework" value="ASP Net Core"
+                       onChange={e => setSettings({...settings, targetFramework: e.target.id})}/>
+                <Label htmlFor="aspnetcore">ASP Net Core</Label>
+            </div>}
+            {settings.targetPlatform === "javascript" && <>
+                <div className="flex items-center gap-2">
+                    <Radio id="node-js" name="targetFramework" value="Node JS"
+                           onChange={e => setSettings({...settings, targetFramework: e.target.id})}/>
+                    <Label htmlFor="node-js">Node JS</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="nest-js" name="targetFramework" value="Nest JS"
+                           onChange={e => setSettings({...settings, targetFramework: e.target.id})}/>
+                    <Label htmlFor="nest-js">Nest JS</Label>
+                </div>
+            </>}
+        </div>}
     </div>
 
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetLanguageStyle">
                 Target Language Style
             </Label>
@@ -135,7 +176,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="reactive">Reactive</Label>
             </div>
         </div>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetConcurrencyModel">
                 Target Concurrency Model
             </Label>
@@ -155,10 +196,12 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="parallel">Parallel</Label>
             </div>
         </div>
+        <div style={{width: '38%'}}>
+        </div>
     </div>
 
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetArchitectureStyle">
                 Target Architecture Style
             </Label>
@@ -179,7 +222,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="microservice">Microservice</Label>
             </div>
         </div>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetArchitecturePattern">
                 Target Architecture Pattern
             </Label>
@@ -208,9 +251,12 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="port-adapter">Port & Adapter</Label>
             </div>
         </div>
+        <div style={{width: '38%'}}>
+        </div>
     </div>
+
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetCommunicationProtocol">
                 Target Communication Protocol
             </Label>
@@ -247,7 +293,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="messaging">Messaging</Label>
             </div>
         </div>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetCqrsOptions">
                 Target CQRS Options
             </Label>
@@ -262,9 +308,12 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="cqrs">CQRS</Label>
             </div>
         </div>
+        <div style={{width: '38%'}}>
+        </div>
     </div>
+
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetDatabaseOptions">
                 Target Database Options
             </Label>
@@ -284,27 +333,28 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="no-sql">NoSQl</Label>
             </div>
         </div>
-        {settings.targetDatabaseOptions !== 'in-memory' && <div style={{width: '48%'}}>
+        {settings.targetDatabaseOptions !== 'in-memory' && <div style={{width: '38%'}}>
             <Label htmlFor="targetDatabaseTechnologies">
                 Target Database Technologies
             </Label>
             {settings.targetDatabaseOptions !== 'sql' && <>
-            <div className="flex items-center gap-2">
-                <Radio id="event-store" name="targetDatabaseTechnologies" value="Event Store"
-                       onChange={e => setSettings({
-                           ...settings,
-                           targetDatabaseTechnologies: e.target.id
-                       })}/>
-                <Label htmlFor="event-store">Event Store</Label>
-            </div>
-            <div className="flex items-center gap-2">
-                <Radio id="mongo-db" name="targetDatabaseTechnologies" value="MongoDB"
-                       onChange={e => setSettings({
-                           ...settings,
-                           targetDatabaseTechnologies: e.target.id
-                       })}/>
-                <Label htmlFor="mongo-db">MongoDB</Label>
-            </div></>}
+                <div className="flex items-center gap-2">
+                    <Radio id="event-store" name="targetDatabaseTechnologies" value="Event Store"
+                           onChange={e => setSettings({
+                               ...settings,
+                               targetDatabaseTechnologies: e.target.id
+                           })}/>
+                    <Label htmlFor="event-store">Event Store</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Radio id="mongo-db" name="targetDatabaseTechnologies" value="MongoDB"
+                           onChange={e => setSettings({
+                               ...settings,
+                               targetDatabaseTechnologies: e.target.id
+                           })}/>
+                    <Label htmlFor="mongo-db">MongoDB</Label>
+                </div>
+            </>}
             {settings.targetDatabaseOptions === 'sql' && <>
                 <div className="flex items-center gap-2">
                     <Radio id="my-sql" name="targetDatabaseTechnologies" value="MySQL"
@@ -324,9 +374,12 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 </div>
             </>}
         </div>}
+        <div style={{width: '38%'}}>
+        </div>
     </div>
+
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetDeploymentOptions">
                 Target Deployment Options
             </Label>
@@ -346,7 +399,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="k8s">K8s</Label>
             </div>
         </div>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetMessagingTechnologies">
                 Target Messaging Technologies
             </Label>
@@ -375,9 +428,12 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="ms-service-bus">Microsoft Service Bus</Label>
             </div>
         </div>
+        <div style={{width: '38%'}}>
+        </div>
     </div>
+
     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetSecurityOptions">
                 Target Security Options
             </Label>
@@ -397,7 +453,7 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                 <Label htmlFor="social-media">Social Media</Label>
             </div>
         </div>
-        <div style={{width: '48%'}}>
+        <div style={{width: '38%'}}>
             <Label htmlFor="targetObservabilityOptions">
                 Target Observability / Proxy / Cache Options
             </Label>
@@ -457,6 +513,8 @@ const ServerSideSettings = ({settings, setSettings}) => <>
                           })}/>
                 <Label htmlFor="native-image">Native Image (GraalVM, Microsoft Native Image)</Label>
             </div>
+        </div>
+        <div style={{width: '38%'}}>
         </div>
     </div>
 </>
