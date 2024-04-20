@@ -47,7 +47,7 @@ const FrameworkBuildingBlocks = () => {
 
                 <div className="grid grid-cols-6 gap-2">
                     <Popover content={coreContent.core} trigger="hover">
-                        <Button>Aggregate</Button>
+                        <Button>Core</Button>
                     </Popover>
                     <Popover content={coreContent.service} trigger="hover">
                         <Button>Service</Button>
