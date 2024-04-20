@@ -22,7 +22,7 @@ import CodeEditor from "@uiw/react-textarea-code-editor";
 const nodeTypes = {custom: (props) => <CustomNode {...props}/>};
 function BoardPage() {
     const {id} = useParams();
-    const {saveFlowModel, findBoardById, handleSaveDiagramAsCodeChange} = useContext(BoardsContext);
+    const {saveFlowModel, findBoardById, handleSaveDiagramAsCodeChange, generateJsonModel} = useContext(BoardsContext);
     const {findDiagramById} = useContext(DiagramsContext);
     const [diagramCode, setDiagramCode] = useState('');
     const [reactFlowInstance, setReactFlowInstance] = useState(null);
@@ -68,9 +68,9 @@ function BoardPage() {
         setDiagramCode(event.target.value);
         try {
             const parsedFlow = JSON.parse(event.target.value);
-            setNodes(parsedFlow);
-            setEdges([])
-            saveFlowModel(id, diagram.id, parsedFlow, edges);
+            setNodes(parsedFlow.nodes);
+            setEdges(parsedFlow.edges)
+            saveFlowModel(id, parsedFlow.nodes, parsedFlow.edges);
         } catch (error) {
             console.error('Error parsing JSON:', error);
         }
@@ -81,8 +81,8 @@ function BoardPage() {
         events.
         filter(event => event.type !== 'remove').
         forEach(() => {
-            saveFlowModel(id, diagram.id, nodes, edges);
-            setDiagramCode(JSON.stringify(nodes, undefined, 2))
+            saveFlowModel(id, nodes, edges);
+            setDiagramCode(JSON.stringify(generateJsonModel(id, nodes, edges), undefined, 2))
         })
     }
 
@@ -90,8 +90,8 @@ function BoardPage() {
         const newNodes = deleteElements(nodes, deletedNode);
         setNodes(newNodes);
         setEdges([])
-        saveFlowModel(id, diagram.id, newNodes, edges);
-        setDiagramCode(JSON.stringify(newNodes, undefined, 2))
+        saveFlowModel(id, newNodes, edges);
+        setDiagramCode(JSON.stringify(generateJsonModel(id, newNodes, edges), undefined, 2))
     }
 
     const deleteElements = (origin, toDelete) => {

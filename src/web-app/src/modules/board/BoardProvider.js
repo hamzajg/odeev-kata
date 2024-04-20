@@ -48,35 +48,21 @@ const BoardsProvider = ({ children }) => {
         return boards.find(board => board.id === id);
     }
 
-    const generateJsonModel = (id, diagramId, nodes, edges) => {
-        const model = {
+    const generateJsonModel = (id, nodes, edges) => {
+        return {
             id: id,
-            diagramId: diagramId,
-            nodes: nodes.map(({ id, type, data, position, sourcePosition, targetPosition, style }) => ({
-                id,
-                type,
-                label: data.label,
-                color: data.color,
-                x: position.x,
-                y: position.y,
-                source: sourcePosition,
-                target: targetPosition,
-                style: {
-                    backgroundColor: style.backgroundColor,
-                },
-            })),
-            edges: edges.map(({ id, source, target }) => ({ id, source, target })),
-        };
-    };
-
-    const saveFlowModel = (id, diagramId, nodes, edges) => {
-        const model = {
-            id: id,
-            diagramId: diagramId,
             nodes: nodes,
             edges: edges,
         };
-        generateJsonModel(id, diagramId, nodes, edges);
+    };
+
+    const saveFlowModel = (id, nodes, edges) => {
+        const model = {
+            id: id,
+            nodes: nodes,
+            edges: edges,
+        };
+        generateJsonModel(id, nodes, edges);
         addOrUpdateBoard(model);
     };
 
