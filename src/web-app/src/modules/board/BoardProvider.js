@@ -80,8 +80,7 @@ const BoardsProvider = ({ children }) => {
     };
 
     const handleSaveDiagramAsCodeChange = async (diagram, diagramCode) => {
-        const workspacePath = localStorage.getItem('workspace-path');
-        const defaultPath =  workspacePath + "/domain-context-"+ diagram.type +".json";
+        const defaultPath =  "/domain-context-"+ diagram.type +".json";
         window.postMessage({type: "createFile", filePath: "/domain-context-"+ diagram.type +".json", fileContent: diagramCode}, '*');
         try {
             const opts = {
@@ -99,6 +98,7 @@ const BoardsProvider = ({ children }) => {
             }
         }
     };
+
     const value = {
         boards,
         addOrUpdateBoard,

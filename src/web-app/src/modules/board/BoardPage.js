@@ -17,7 +17,6 @@ import AIChatDialog from "./components/AIChatDialog";
 import {BoardsContext} from "./BoardProvider";
 import {DiagramsContext} from "../diagrams/DiagramProvider";
 import CodeEditor from "@uiw/react-textarea-code-editor";
-import colors from "tailwindcss/colors";
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 const nodeTypes = {custom: (props) => <CustomNode {...props}/>};

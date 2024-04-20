@@ -80,8 +80,7 @@ const OpenApisSpecificationEditorAndSwaggerPreview = () => {
     };
 
     const handleSaveYAMLChange = async () => {
-        const workspacePath = localStorage.getItem('workspace-path')
-        const defaultPath = workspacePath + "/open-apis-specs.yml";
+        const defaultPath = "/open-apis-specs.yml";
         window.postMessage({type: "createFile", filePath: "/open-apis-specs.yml", fileContent: yamlValue}, '*');
         try {
             const opts = {

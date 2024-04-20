@@ -42,8 +42,7 @@ const SolutionProvider = ({ children }) => {
     }
 
     const handleSaveMetadata = async (project, settings) => {
-        const workspacePath = localStorage.getItem('workspace-path');
-        const defaultPath =  workspacePath + "/metadata.json";
+        const defaultPath =  "/metadata.json";
         const metadata = {...project,
             frameworkVersion: "1.0.0",
             settings: settings,
