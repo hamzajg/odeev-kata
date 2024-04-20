@@ -1,9 +1,9 @@
 import * as vscode from 'vscode';
-import { Uri, WebviewPanel, WebviewOptions } from 'vscode';
-import * as fs from "fs";
-import * as archiver from 'archiver';
+import {Uri, WebviewPanel} from 'vscode';
+import {FileGenerator} from "./fileGenerator";
 
 const workspaceFolders = vscode.workspace.workspaceFolders;
+let workspacePath: string | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
     const openWebUrlCommand = vscode.commands.registerCommand('odeev-kata-poc-app-extension.open', () => {
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function createWebviewPanel(extensionUri: Uri): WebviewPanel {
     const panel = vscode.window.createWebviewPanel(
-        'myWebview',
+        'webview',
         'Odeev Kata PoC App',
         vscode.ViewColumn.Beside,
         {
@@ -26,41 +26,33 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
 
     let scriptSrc = panel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, "dist", "static", "js", "main.js"))
     let cssSrc = panel.webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, "dist", "static", "css", "main.css"))
-    let workspacePath = "";
     if (workspaceFolders) {
         workspacePath = workspaceFolders[0].uri.fsPath;
     }
-    panel.webview.onDidReceiveMessage(message => {
-        console.log('VSCODE Received data:', message);
 
-        if (message && message.type === 'createFile' && message.fileContent) {
-            const fileContent = message.fileContent;
-            const filePath = message.filePath;
-            fs.writeFileSync(workspacePath + filePath, fileContent);
-            console.log('File saved successfully!');
-        } else if (message && message.type === 'createProject' && message.fileContent) {
-            const fileContent = message.fileContent;
-            const filePath = message.filePath;
-            fs.writeFileSync(workspacePath + filePath, fileContent);
-            const fileExtension = (workspacePath + filePath).split('.').pop();
-            console.log('File saved successfully!');
-            if (fileExtension === 'zip') {
-                const outputPath = (workspacePath + filePath).replace('.zip', '');
-                const archive = archiver('zip', { zlib: { level: 9 } });
-                archive.pipe(fs.createWriteStream(outputPath));
-                archive.file((workspacePath + filePath), { name: (workspacePath + filePath) });
-                archive.finalize();
+    panel.webview.onDidReceiveMessage(onMessageReceivedListener);
 
-                console.error(`Unzipped file to ${outputPath}`);
-            } else {
-                console.error('Please select a ZIP file.');
-            }
-        } else {
-            console.error('No workspace opened in VS Code.');
-        }
-    });
-    panel.webview.html = `<!DOCTYPE html>
-        <html data-darkreader-mode="dynamic" data-darkreader-scheme="dark" lang="en">
+    panel.webview.html = getHtmlContent(scriptSrc, cssSrc);
+    return panel;
+}
+
+const onMessageReceivedListener = (message: any) => {
+    console.log('VSCODE Received data:', message);
+    if(!workspacePath) {
+        console.error('No workspace opened in VS Code.');
+        return;
+    }
+
+    if (message && message.type === 'createFile' && message.fileContent) {
+        FileGenerator.createFile(message, workspacePath!);
+    } else if (message && message.type === 'createProject' && message.fileContent) {
+        FileGenerator.createProject(message, workspacePath!);
+    }
+}
+
+const getHtmlContent = (scriptSrc: Uri, cssSrc: Uri) => {
+    return `<!DOCTYPE html>
+        <html lang="en">
           <head>
             <script defer src="${scriptSrc}"></script>
             <link rel="stylesheet" href="${cssSrc}" />
@@ -78,9 +70,8 @@ function createWebviewPanel(extensionUri: Uri): WebviewPanel {
             });
            </script>
         </html>
-        `;
-
-    return panel;
+        `
 }
 
-export function deactivate() {}
+export function deactivate() {
+}

@@ -3,6 +3,7 @@ import SwaggerUI from "swagger-ui-react";
 import 'swagger-ui-react/swagger-ui.css';
 import React, {useState} from "react";
 import {Button} from "flowbite-react";
+import {Utilities} from "../../../utilities/Utillties";
 
 const OpenApisSpecificationEditorAndSwaggerPreview = () => {
     const [savedTo, setSavedTo] = useState();
@@ -753,23 +754,9 @@ const OpenApisSpecificationEditorAndSwaggerPreview = () => {
     };
 
     const handleSaveYAMLChange = async () => {
-        const defaultPath = "/open-apis-specs.yml";
-        window.postMessage({type: "createFile", filePath: "/open-apis-specs.yml", fileContent: yamlValue}, '*');
-        try {
-            const opts = {
-                suggestedName: defaultPath
-            };
-            const handle = await window.showSaveFilePicker(opts);
-            const writableStream = await handle.createWritable();
-            await writableStream.write(yamlValue);
-            await writableStream.close();
-        } catch (error) {
-            if (error.name === 'AbortError') {
-                console.log('File save operation aborted by the user.');
-            } else {
-                console.error('Error saving file:', error);
-            }
-        }
+        const defaultPath = "open-apis-specs.yml";
+        window.postMessage({type: "createFile", filePath: defaultPath, fileContent: yamlValue}, '*');
+        await Utilities.showSaveFilePickerFor(defaultPath, yamlValue)
     };
 
     return(

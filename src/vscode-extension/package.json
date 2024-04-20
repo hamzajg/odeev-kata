@@ -38,6 +38,6 @@
     "vsce": "^2.15.0"
   },
   "dependencies": {
-    "archiver": "^7.0.1"
+    "jszip": "^3.10.1"
   }
 }

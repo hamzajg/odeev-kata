@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {SolutionService} from "./SolutionService";
+import {Utilities} from "../../utilities/Utillties";
 
 const SolutionContext = createContext();
 
@@ -37,32 +38,25 @@ const SolutionProvider = ({ children }) => {
             domainEventModelFilePath: "domain-context-event-modeling.json",
             domainSpecificationModelFilePath: "domain-context-specification-by-example.json",
         }
-        const metadataContent = JSON.stringify(metadata, undefined, 2);
+
         try {
+            const defaultPath =  project.name + ".zip";
+
             const response = await SolutionService.callSwaggerCodeGen(metadata)
-            window.postMessage({type: "createProject", filePath: "/"+project.name + ".zip", fileContent: response}, '*');
-            try {
-                const opts = {
-                    suggestedName: project.name + ".zip"
-                };
-                const handle = await window.showSaveFilePicker(opts);
-                const writableStream = await handle.createWritable();
-                await writableStream.write(response);
-                await writableStream.close();
-            } catch (error) {
-                if (error.name === 'AbortError') {
-                    console.log('File save operation aborted by the user.');
-                } else {
-                    console.error('Error saving file:', error);
-                }
-            }
+            const reader = new FileReader();
+            reader.onload = () => {
+                window.postMessage({type: "createProject", filePath: defaultPath, fileContent: reader.result}, '*');
+            };
+            reader.readAsArrayBuffer(response);
+
+            await Utilities.showSaveFilePickerFor(defaultPath, response)
         } catch (error) {
             console.error('Error downloading file:', error);
         }
     }
 
     const handleSaveMetadata = async (project, settings) => {
-        const defaultPath =  "/metadata.json";
+        const defaultPath =  "metadata.json";
         const metadata = {...project,
             frameworkVersion: "1.0.0",
             settings: settings,
@@ -71,23 +65,10 @@ const SolutionProvider = ({ children }) => {
             domainSpecificationModelFilePath: "domain-context-specification-by-example.json",
         }
         const metadataContent = JSON.stringify(metadata, undefined, 2);
-        window.postMessage({type: "createFile", filePath: "/metadata.json", fileContent: metadataContent}, '*');
-        try {
-            const opts = {
-                suggestedName: defaultPath
-            };
-            const handle = await window.showSaveFilePicker(opts);
-            const writableStream = await handle.createWritable();
-            await writableStream.write(metadataContent);
-            await writableStream.close();
-        } catch (error) {
-            if (error.name === 'AbortError') {
-                console.log('File save operation aborted by the user.');
-            } else {
-                console.error('Error saving file:', error);
-            }
-        }
+        window.postMessage({type: "createFile", filePath: "metadata.json", fileContent: metadataContent}, '*');
+        await Utilities.showSaveFilePickerFor(defaultPath, metadataContent)
     };
+
     const value = {
         solutions,
         addSolution,
