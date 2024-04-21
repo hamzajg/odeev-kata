@@ -14,7 +14,7 @@ const FrameworkBuildingBlocks = () => {
         )
     }
     const coreContent = {
-        core: (<Content title="Core Domain Model" body="Including Aggregate, Entity, Factory, Repository, Use Case"/>),
+        core: (<Content title="Core Domain Model" body="Including Aggregate, Entity, Value Object, Factory, Repository, Use Case"/>),
         service: (<Content title="Service" body="Encapsulates business logic that doesn't naturally fit within an entity or value object, promoting separation of concerns."/>),
         event: (<Content title="Event" body="Captures a significant change or occurrence within the system, enabling event-driven architecture and eventual consistency."/>),
         command: (<Content title="Command" body="Encapsulates a request or intention to perform an action, facilitating decoupled communication between components."/>),
