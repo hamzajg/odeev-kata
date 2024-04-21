@@ -328,7 +328,7 @@ and simplifies the development process.
 
 - Here a list of existing tools both on the Web and VSCode:
   - Web
-    - https://domorobo.to/ (Contributor)
+    - https://domorobo.to/ (Former Contributor)
     - https://prooph-board.com/
     - https://www.modelmycode.com/
   - VSCode Extension

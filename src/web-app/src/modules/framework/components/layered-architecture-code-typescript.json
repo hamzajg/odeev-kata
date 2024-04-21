@@ -1,0 +1,26 @@
+[
+  {
+    "name": "HomeController.ts",
+    "content": "import { Request, Response } from 'express';\n\nexport class HomeController {\n  static index(req: Request, res: Response): void {\n    res.send('Hello, World!');\n  }\n}"
+  },
+  {
+    "name": "HomeService.ts",
+    "content": "export class HomeService {\n  static getMessage(): string {\n    return 'Welcome to our home service!';\n  }\n}"
+  },
+  {
+    "name": "HomeRepository.ts",
+    "content": "export class HomeRepository {\n  static fetchData(): Promise<any> {\n    return fetch('/api/data')\n      .then(response => response.json())\n      .catch(error => console.error('Error fetching data:', error));\n  }\n}"
+  },
+  {
+    "name": "HomeModel.ts",
+    "content": "export interface HomeModel {\n  id: number;\n  name: string;\n  age: number;\n}"
+  },
+  {
+    "name": "HomeView.tsx",
+    "content": "import React from 'react';\n\nexport const HomeView: React.FC = () => {\n  return (\n    <div>\n      <h1>Welcome to our home view!</h1>\n    </div>\n  );\n};"
+  },
+  {
+    "name": "UtilityFunctions.ts",
+    "content": "export const add = (a: number, b: number): number => {\n  return a + b;\n};"
+  }
+]

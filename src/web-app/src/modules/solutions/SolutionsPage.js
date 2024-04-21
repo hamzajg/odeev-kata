@@ -38,7 +38,7 @@ const SolutionsPage = () => {
                     </Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                    {solutions.map((solution, index) => (
+                    {solutions?.map((solution, index) => (
                         <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={index}>
                             <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                 <Link to={"/solutions/" + solution.id + "/projects"}> {solution.name} </Link></Table.Cell>

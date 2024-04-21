@@ -104,11 +104,11 @@ function BoardPage() {
             <div className="w-64 bg-gray-800 text-white">
                 <Sidebar>
                     <Sidebar.Logo href="#" img="" className="tracking-tight text-gray-900 dark:text-white">
-                        {diagram.type === 'specification-by-example' ? 'BDD' : 'Event Modeling'} Palette
+                        {diagram?.type === 'specification-by-example' ? 'BDD' : 'Event Modeling'} Palette
                     </Sidebar.Logo>
                     <Sidebar.Items>
                         <Sidebar.ItemGroup>
-                            {diagram.type === 'specification-by-example' ? <>
+                            {diagram?.type === 'specification-by-example' ? <>
                                 <PaletteItem id="given" label="Given" color="#bf9000" onDoubleClick={onPaletteItemDoubleClick}/>
                                 <PaletteItem id="when" label="When" color="#1e88e5" onDoubleClick={onPaletteItemDoubleClick}/>
                                 <PaletteItem id="given" label="Then" color="#ff9800" onDoubleClick={onPaletteItemDoubleClick}/>

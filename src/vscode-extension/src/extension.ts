@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import {Uri, WebviewPanel} from 'vscode';
-import {FileGenerator} from "./fileGenerator";
+import {Utilities} from "./utilities";
 
 const workspaceFolders = vscode.workspace.workspaceFolders;
 let workspacePath: string | undefined;
@@ -44,9 +44,9 @@ const onMessageReceivedListener = (message: any) => {
     }
 
     if (message && message.type === 'createFile' && message.fileContent) {
-        FileGenerator.createFile(message, workspacePath!);
+        Utilities.createFile(message, workspacePath!);
     } else if (message && message.type === 'createProject' && message.fileContent) {
-        FileGenerator.createProject(message, workspacePath!);
+        Utilities.createProject(message, workspacePath!);
     }
 }
 

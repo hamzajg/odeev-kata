@@ -6,6 +6,8 @@ import folderStructureJava from "./layered-architecture-java.json";
 import filesContentJava from "./layered-architecture-code-java.json";
 import folderStructureDotNetCore from "./layered-architecture-dot-net-core.json";
 import filesContentDotNetCore from "./layered-architecture-code-dot-net-core.json";
+import folderStructureTypescript from "./layered-architecture-typescript.json";
+import filesContentTypescript from "./layered-architecture-code-typescript.json";
 
 const SolutionsTemplateBoilerplate = () => {
     const [selectedFileName, setSelectedFileName] = useState();
@@ -46,10 +48,10 @@ const SolutionsTemplateBoilerplate = () => {
                     </h3>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{width: '30%'}}>
-                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                            <DirectoryTreeView folder={folderStructureTypescript} onNodeSelected={onNodeSelected}/>
                         </div>
                         <div style={{width: '76%'}}>
-                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                            <ReadOnlyFileEditor files={filesContentTypescript} fileName={selectedFileName}/>
                         </div>
                     </div>
                 </Card>
@@ -87,10 +89,10 @@ const SolutionsTemplateBoilerplate = () => {
                     </h3>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{width: '30%'}}>
-                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                            <DirectoryTreeView folder={folderStructureTypescript} onNodeSelected={onNodeSelected}/>
                         </div>
                         <div style={{width: '76%'}}>
-                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                            <ReadOnlyFileEditor files={filesContentTypescript} fileName={selectedFileName}/>
                         </div>
                     </div>
                 </Card>
@@ -128,10 +130,10 @@ const SolutionsTemplateBoilerplate = () => {
                     </h3>
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <div style={{width: '30%'}}>
-                            <DirectoryTreeView folder={folderStructureDotNetCore} onNodeSelected={onNodeSelected}/>
+                            <DirectoryTreeView folder={folderStructureTypescript} onNodeSelected={onNodeSelected}/>
                         </div>
                         <div style={{width: '76%'}}>
-                            <ReadOnlyFileEditor files={filesContentDotNetCore} fileName={selectedFileName}/>
+                            <ReadOnlyFileEditor files={filesContentTypescript} fileName={selectedFileName}/>
                         </div>
                     </div>
                 </Card>

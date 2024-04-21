@@ -1,0 +1,58 @@
+{
+  "name": "layered-architecture-solution-typescript",
+  "children": [
+    {
+      "name": "src",
+      "children": [
+        {
+          "name": "Controllers",
+          "children": [
+            {
+              "name": "HomeController.ts"
+            }
+          ]
+        },
+        {
+          "name": "Services",
+          "children": [
+            {
+              "name": "HomeService.ts"
+            }
+          ]
+        },
+        {
+          "name": "Repositories",
+          "children": [
+            {
+              "name": "HomeRepository.ts"
+            }
+          ]
+        },
+        {
+          "name": "Models",
+          "children": [
+            {
+              "name": "HomeModel.ts"
+            }
+          ]
+        },
+        {
+          "name": "Views",
+          "children": [
+            {
+              "name": "HomeView.tsx"
+            }
+          ]
+        },
+        {
+          "name": "Utils",
+          "children": [
+            {
+              "name": "UtilityFunctions.ts"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -31,15 +31,15 @@ const ClientSideSettings = ({settings, setSettings}) => <>
             </Label>
             {(!settings.targetClientPlatformTypeSettings || settings.targetClientPlatformTypeSettings === 'web') && <>
                 <div className="flex items-center gap-2">
-                    <Radio id="react-js" name="targetClientPlatformSettings" value="React JS"
+                    <Radio id="javascript" name="targetClientPlatformSettings" value="React JS"
                            onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                    <Label htmlFor="react-js">React JS</Label>
+                    <Label htmlFor="javascript">React JS</Label>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Radio id="angular" name="targetClientPlatformSettings" value="Angular"
+                    <Radio id="typescript-fetch" name="targetClientPlatformSettings" value="Angular"
                            onChange={e => setSettings({...settings, targetClientPlatformSettings: e.target.id})}/>
-                    <Label htmlFor="angular">Angular</Label>
+                    <Label htmlFor="typescript-fetch">Angular</Label>
                 </div>
 
                 <div className="flex items-center gap-2">

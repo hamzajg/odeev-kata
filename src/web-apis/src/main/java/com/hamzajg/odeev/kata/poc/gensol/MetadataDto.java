@@ -7,6 +7,7 @@ public class MetadataDto {
 
     static class SettingsDto {
         public String targetFramework;
+        public String targetClientPlatformSettings;
     }
     static class ResponseDto {
         public String code;
