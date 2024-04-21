@@ -11,7 +11,7 @@ const DiagramsProvider = ({children}) => {
     });
 
     useEffect(() => {
-        localStorage.setItem('diagrams', JSON.stringify(diagrams));
+        localStorage.setItem('diagrams', JSON.stringify(diagrams ?? []));
     }, [diagrams]);
 
     const addDiagram = (newDiagram) => {
@@ -24,7 +24,7 @@ const DiagramsProvider = ({children}) => {
 
     useEffect(() => {
         DiagramService.fetchDiagrams()
-            .then(setDiagrams)
+            .then(data => setDiagrams(data ?? []));
     }, []);
 
     const removeDiagram = (diagramId) => {

@@ -11,7 +11,7 @@ const TeamProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        localStorage.setItem('teams', JSON.stringify(teams));
+        localStorage.setItem('teams', JSON.stringify(teams ?? []));
     }, [teams]);
 
     const addTeam = (newTeam) => {
@@ -22,7 +22,7 @@ const TeamProvider = ({ children }) => {
 
     useEffect(() => {
         TeamService.fetchTeams()
-            .then(setTeams);
+            .then(data => setTeams(data ?? []));
     }, []);
 
     const removeTeam = (id) => {

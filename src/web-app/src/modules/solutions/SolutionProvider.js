@@ -12,7 +12,7 @@ const SolutionProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        localStorage.setItem('solutions', JSON.stringify(solutions));
+        localStorage.setItem('solutions', JSON.stringify(solutions ?? []));
     }, [solutions]);
 
     const addSolution = (newSolution) => {
@@ -23,7 +23,7 @@ const SolutionProvider = ({ children }) => {
 
     useEffect(() => {
         SolutionService.fetchSolutions()
-            .then(setSolutions);
+            .then(data => setSolutions(data ?? []));
     }, []);
 
     const findSolutionById = (id) => {

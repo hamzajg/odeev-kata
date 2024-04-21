@@ -11,7 +11,7 @@ const BoardsProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        localStorage.setItem('boards', JSON.stringify(boards));
+        localStorage.setItem('boards', JSON.stringify(boards ?? []));
     }, [boards]);
 
     const addOrUpdateBoard = (newBoard) => {
@@ -37,7 +37,7 @@ const BoardsProvider = ({ children }) => {
     useEffect(() => {
         BoardService.fetchBoards()
             .then(result =>
-                setBoards(result.map(board => ({
+                setBoards(result?.map(board => ({
                     ...board,
                     nodes: JSON.parse(board.nodes),
                     edges: JSON.parse(board.edges),
@@ -45,7 +45,7 @@ const BoardsProvider = ({ children }) => {
     }, []);
 
     const findBoardById = (id) => {
-        return boards.find(board => board.id === id);
+        return boards?.find(board => board.id === id);
     }
 
     const generateJsonModel = (id, nodes, edges) => {

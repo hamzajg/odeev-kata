@@ -11,7 +11,7 @@ const ProjectProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        localStorage.setItem('projects', JSON.stringify(projects));
+        localStorage.setItem('projects', JSON.stringify(projects ?? []));
     }, [projects]);
 
     const addProject = (newProject) => {
@@ -22,7 +22,7 @@ const ProjectProvider = ({ children }) => {
 
     useEffect(() => {
         ProjectService.fetchProjects()
-            .then(setProjects);
+            .then(data => setProjects(data ?? []));
     }, []);
 
     const removeProject = (projectId) => {
