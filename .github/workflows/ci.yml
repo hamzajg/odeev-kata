@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (Spring Boot)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/web-apis
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+      - name: Build
+        run: ./gradlew build --no-daemon
+
+  web-app:
+    name: Web app (React)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src/web-app
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Build
+        # CRA treats ESLint warnings as errors when CI=true; the repo has
+        # pre-existing warnings, so build in non-CI mode.
+        env:
+          CI: "false"
+        run: yarn build
