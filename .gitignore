@@ -1,2 +1,7 @@
 /.idea/**
 /src/web-app/.yarn/
+
+# VS Code extension build output (regenerate with `vsce package`)
+/src/vscode-extension/dist/
+/src/vscode-extension/out/
+*.vsix

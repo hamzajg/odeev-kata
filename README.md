@@ -354,3 +354,26 @@ and refine their models based on real-world feedback and insights.
 
 ### Architecture Decisions Records
 
+
+## Building the VS Code extension
+
+The extension's webview is a build of `src/web-app`. Neither that build
+(`src/vscode-extension/dist/`) nor the packaged `.vsix` is tracked, because both
+are generated output:
+
+```bash
+cd src/web-app
+yarn install
+yarn build
+
+cd ../vscode-extension
+rm -rf dist
+cp -r ../web-app/build dist
+
+npm install
+npm run compile
+npx vsce package
+```
+
+`vsce package` writes `odeev-kata-poc-app-extension-<version>.vsix`, which is
+ignored by git. Install it in VS Code with `code --install-extension <file>`.
