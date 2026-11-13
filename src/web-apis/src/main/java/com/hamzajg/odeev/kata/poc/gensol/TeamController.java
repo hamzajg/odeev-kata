@@ -2,13 +2,13 @@ package com.hamzajg.odeev.kata.poc.gensol;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/teams")
 public class TeamController {
-    private final List<TeamDto> teams = new ArrayList<>();
+    private final List<TeamDto> teams = new CopyOnWriteArrayList<>();
 
     @GetMapping
     public List<TeamDto> getAllTeams() {
