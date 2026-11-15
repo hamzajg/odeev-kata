@@ -15,16 +15,17 @@ const BoardsProvider = ({ children }) => {
     }, [boards]);
 
     const addOrUpdateBoard = (newBoard) => {
-        const existingBoardIndex = boards.findIndex(board => board.id === newBoard.id);
-        if (existingBoardIndex !== -1) {
-            const updatedBoards = [...boards];
-            updatedBoards[existingBoardIndex] = {
-                ...updatedBoards[existingBoardIndex],
+        const existingBoard = boards.find(board => board.diagramId === newBoard.diagramId
+            || board.id === newBoard.id);
+        if (existingBoard) {
+            const updatedBoard = {
+                ...existingBoard,
                 ...newBoard,
+                id: existingBoard.id,
                 updatedAt: new Date().toISOString()
             };
-            setBoards(updatedBoards);
-            BoardService.putBoard({...updatedBoards[existingBoardIndex], nodes: JSON.stringify(updatedBoards[existingBoardIndex].nodes), edges: JSON.stringify(updatedBoards[existingBoardIndex].edges)})
+            setBoards(boards.map(board => board.id === existingBoard.id ? updatedBoard : board));
+            BoardService.putBoard({...updatedBoard, nodes: JSON.stringify(updatedBoard.nodes), edges: JSON.stringify(updatedBoard.edges)})
 
         } else {
             newBoard.createdAt = new Date().toISOString();
@@ -44,8 +45,8 @@ const BoardsProvider = ({ children }) => {
                 }))));
     }, []);
 
-    const findBoardById = (id) => {
-        return boards?.find(board => board.id === id);
+    const findBoardById = (diagramId) => {
+        return boards?.find(board => board.diagramId === diagramId || board.id === diagramId);
     }
 
     const generateJsonModel = (id, nodes, edges) => {
@@ -56,13 +57,13 @@ const BoardsProvider = ({ children }) => {
         };
     };
 
-    const saveFlowModel = (id, nodes, edges) => {
+    const saveFlowModel = (diagramId, nodes, edges) => {
         const model = {
-            id: id,
+            diagramId: diagramId,
             nodes: nodes,
             edges: edges,
         };
-        generateJsonModel(id, nodes, edges);
+        generateJsonModel(diagramId, nodes, edges);
         addOrUpdateBoard(model);
     };
 

@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {ProjectService} from "./ProjectService";
 
 const ProjectContext = createContext();
@@ -14,20 +13,23 @@ const ProjectProvider = ({ children }) => {
         localStorage.setItem('projects', JSON.stringify(projects ?? []));
     }, [projects]);
 
-    const addProject = (newProject) => {
-        newProject.id = uuidv4();
-        setProjects([...projects, newProject]);
-        ProjectService.postProject(newProject)
-    };
-
-    useEffect(() => {
+    const refreshProjects = () => {
         ProjectService.fetchProjects()
             .then(data => setProjects(data ?? []));
-    }, []);
+    };
+
+    useEffect(refreshProjects, []);
+
+    const addProject = (newProject) => {
+        ProjectService.postProject(newProject).then(refreshProjects);
+    };
+
+    const updateProject = (id, updatedProject) => {
+        ProjectService.updateProject(id, updatedProject).then(refreshProjects);
+    };
 
     const removeProject = (projectId) => {
-        const updatedProjects = projects.filter((project) => project.id !== projectId);
-        setProjects(updatedProjects);
+        ProjectService.deleteProject(projectId).then(refreshProjects);
     };
 
     const findProjectById = (id) => {
@@ -41,6 +43,7 @@ const ProjectProvider = ({ children }) => {
     const value = {
         projects,
         addProject,
+        updateProject,
         removeProject,
         findProjectById,
         findProjectsBySolutionId

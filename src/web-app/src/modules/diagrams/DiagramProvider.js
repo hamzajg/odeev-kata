@@ -1,5 +1,4 @@
 import React, {createContext, useState, useEffect} from 'react';
-import {v4 as uuidv4} from "uuid";
 import {DiagramService} from "./DiagramService";
 
 const DiagramsContext = createContext();
@@ -14,21 +13,25 @@ const DiagramsProvider = ({children}) => {
         localStorage.setItem('diagrams', JSON.stringify(diagrams ?? []));
     }, [diagrams]);
 
-    const addDiagram = (newDiagram) => {
-        newDiagram.id = uuidv4();
-        newDiagram.createdAt = new Date().toISOString();
-        newDiagram.updatedAt = new Date().toISOString();
-        setDiagrams([...diagrams, newDiagram]);
-        DiagramService.postDiagram(newDiagram)
-    };
-
-    useEffect(() => {
+    const refreshDiagrams = () => {
         DiagramService.fetchDiagrams()
             .then(data => setDiagrams(data ?? []));
-    }, []);
+    };
+
+    useEffect(refreshDiagrams, []);
+
+    const addDiagram = (newDiagram) => {
+        newDiagram.createdAt = new Date().toISOString();
+        newDiagram.updatedAt = new Date().toISOString();
+        DiagramService.postDiagram(newDiagram).then(refreshDiagrams);
+    };
+
+    const updateDiagram = (id, updatedDiagram) => {
+        DiagramService.updateDiagram(id, updatedDiagram).then(refreshDiagrams);
+    };
 
     const removeDiagram = (diagramId) => {
-        setDiagrams(diagrams.filter(diagram => diagram.id !== diagramId));
+        DiagramService.deleteDiagram(diagramId).then(refreshDiagrams);
     };
 
     const findDiagramsByProjectId = (projectId) => {
@@ -42,6 +45,7 @@ const DiagramsProvider = ({children}) => {
     const value = {
         diagrams,
         addDiagram,
+        updateDiagram,
         removeDiagram,
         findDiagramsByProjectId,
         findDiagramById

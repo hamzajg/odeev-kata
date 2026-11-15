@@ -1,6 +1,8 @@
 const TeamService = {
     postTeam,
-    fetchTeams
+    fetchTeams,
+    updateTeam,
+    deleteTeam
 }
 
 async function postTeam (newTeam) {
@@ -34,6 +36,36 @@ async function fetchTeams () {
         }
     } catch (error) {
         console.error('Error fetching teams:', error);
+    }
+}
+
+
+async function updateTeam(id, updatedTeam) {
+    try {
+        const response = await fetch(`http://localhost:8081/teams/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(updatedTeam),
+        });
+        if (response.ok) {
+            return await response.json();
+        }
+        console.error('Error updating team:', response.statusText);
+    } catch (error) {
+        console.error('Error updating team:', error);
+    }
+}
+
+async function deleteTeam(id) {
+    try {
+        const response = await fetch(`http://localhost:8081/teams/${id}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            console.error('Error deleting team:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error deleting team:', error);
     }
 }
 

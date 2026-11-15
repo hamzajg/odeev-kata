@@ -8,7 +8,8 @@ import Drawer from "../../ui/components/Drawer";
 const DiagramsPage = () => {
     const {id} = useParams();
     const {findProjectById} = useContext(ProjectContext);
-    const {findDiagramsByProjectId, addDiagram} = useContext(DiagramsContext);
+    const {findDiagramsByProjectId, addDiagram, updateDiagram, removeDiagram} = useContext(DiagramsContext);
+    const [editingDiagram, setEditingDiagram] = useState(null);
     const navigate = useNavigate();
 
     const project = findProjectById(id)
@@ -22,15 +23,30 @@ const DiagramsPage = () => {
         {id: "specification-by-example", name: "Specification by Example"},
         {id: "uml-sequence-diagram", name: "UML Sequence Diagram"},
         {id: "orm-entity-diagram", name: "ORM Entity Diagram"}]
+    const resetForm = () => {
+        setFormData({id: '', projectId: id, name: '', description: '', type: ''});
+        setEditingDiagram(null);
+    };
+
     const handleAddDiagram = () => {
+        resetForm();
+        setShowRightPanel(true);
+    };
+
+    const handleEditDiagram = (diagram) => {
+        setEditingDiagram(diagram);
+        setFormData({...diagram, projectId: diagram.projectId ?? id});
         setShowRightPanel(true);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        addDiagram(formData);
-        setFormData({id: '', projectId: id, name: '', description: '', type: ''});
+        if (editingDiagram) {
+            updateDiagram(editingDiagram.id, {...formData, id: editingDiagram.id});
+        } else {
+            addDiagram(formData);
+        }
+        resetForm();
         setShowRightPanel(false);
     };
 
@@ -77,8 +93,8 @@ const DiagramsPage = () => {
                                 <div className="flex flex-wrap gap-2">
                                     <Button color="green"><Link
                                         to={"/projects/" + diagram.projectId + "/diagrams/" + diagram.id + "/board"}>Board</Link></Button>
-                                    <Button color="blue">Edit</Button>
-                                    <Button color="red">Remove</Button>
+                                    <Button color="blue" onClick={() => handleEditDiagram(diagram)}>Edit</Button>
+                                    <Button color="red" onClick={() => removeDiagram(diagram.id)}>Remove</Button>
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -87,7 +103,7 @@ const DiagramsPage = () => {
                 </Table.Body>
             </Table>
 
-            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Diagram">
+            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header={editingDiagram ? "Edit Diagram" : "Create Diagram"}>
                 <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
                     <div>
                         <div className="mb-2 block">
@@ -137,7 +153,7 @@ const DiagramsPage = () => {
                         </Select>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
-                        <Button type="submit">Create Diagram</Button>
+                        <Button type="submit">{editingDiagram ? "Save" : "Create Diagram"}</Button>
                     </div>
                 </form>
             </Drawer>

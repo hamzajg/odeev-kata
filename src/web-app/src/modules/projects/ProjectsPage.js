@@ -14,23 +14,40 @@ const ProjectsPage = () => {
     const solution = findSolutionById(id)
     const navigate = useNavigate();
     const [showRightPanel, setShowRightPanel] = useState(false);
-    const {addProject, findProjectsBySolutionId} = useContext(ProjectContext);
+    const {addProject, updateProject, removeProject, findProjectsBySolutionId} = useContext(ProjectContext);
+    const [editingProject, setEditingProject] = useState(null);
     const projects = findProjectsBySolutionId(id)
     const {teams} = useContext(TeamContext);
     const [formData, setFormData] = useState({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
     const [selectedValues, setSelectedValues] = useState([]);
     const [tags, setTags] = useState([{name: "DDD", id: 1}, {name: "Clean Architecture", id: 2}])
 
+    const resetForm = () => {
+        setFormData({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
+        setSelectedValues([]);
+        setEditingProject(null);
+    };
+
     const handleAddProject = () => {
+        resetForm();
+        setShowRightPanel(true);
+    };
+
+    const handleEditProject = (project) => {
+        setEditingProject(project);
+        setFormData({...project, solutionId: project.solutionId ?? id});
+        setSelectedValues([...(project.tags ?? []), ...(project.teamMembers ?? [])]);
         setShowRightPanel(true);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        addProject(formData);
-        setFormData({id: '', name: '', description: '', tags: [], teamMembers: [], solutionId: id});
-        setSelectedValues([])
+        if (editingProject) {
+            updateProject(editingProject.id, {...formData, id: editingProject.id});
+        } else {
+            addProject(formData);
+        }
+        resetForm();
         setShowRightPanel(false);
     };
 
@@ -73,8 +90,8 @@ const ProjectsPage = () => {
                             <Table.Cell>{project.teamMembers.map(item => item.name + ", ")}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex flex-wrap gap-2">
-                                    <Button color="blue">Edit</Button>
-                                    <Button color="red">Remove</Button>
+                                    <Button color="blue" onClick={() => handleEditProject(project)}>Edit</Button>
+                                    <Button color="red" onClick={() => removeProject(project.id)}>Remove</Button>
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -83,7 +100,7 @@ const ProjectsPage = () => {
                 </Table.Body>
             </Table>
 
-            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Project">
+            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header={editingProject ? "Edit Project" : "Create Project"}>
                 <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
                     <div>
                         <div className="mb-2 block">
@@ -150,7 +167,7 @@ const ProjectsPage = () => {
                             }}/>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
-                        <Button type="submit">Create Project</Button>
+                        <Button type="submit">{editingProject ? "Save" : "Create Project"}</Button>
                     </div>
                 </form>
             </Drawer>
