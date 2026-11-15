@@ -35,8 +35,8 @@ src/
   web-apis/          Spring Boot 3.2.4 REST API (Java, Gradle)
                      spring-ai-ollama starter, springdoc-openapi,
                      port 8081; controllers: Board, Team, Solution,
-                     CodeGenerator + DTOs (Diagram, Project, Metadata,
-                     Team, Solution)
+                     CodeGenerator, AgentTool (/api/agent/tools*)
+                     + DTOs (Diagram, Project, Metadata, Team, Solution)
   web-app/           React app (react-scripts CRA, Tailwind, yarn)
   vscode-extension/  VSCode extension (TypeScript, minimal:
                      extension.ts + utilities.ts)

@@ -10,7 +10,9 @@ odeev-kata/
 ├── src/
 │   ├── web-apis/          Spring Boot 3.2.4 REST API (Java/Gradle)
 │   │   └── src/main/java/com/hamzajg/odeev/kata/poc/gensol/
-│   │       ├── *Controller.java   Board, Team, Solution, CodeGenerator
+│   │       ├── *Controller.java   Board, Team, Solution, CodeGenerator,
+│   │       │                      AgentTool (/api/agent/tools*)
+│   │       ├── AgentToolRegistry   named tool surface over OllamaChatClient
 │   │       └── *Dto.java          Diagram, Project, Metadata, Team, Solution
 │   ├── web-app/           React CRA app (react-scripts, Tailwind, yarn)
 │   ├── vscode-extension/  VSCode extension (TS: extension.ts, utilities.ts)
@@ -25,7 +27,8 @@ odeev-kata/
 
 - **web-apis** — Spring Boot on port **8081**; spring-ai-ollama for AI
   generation, springdoc-openapi for API docs. PoC code generator
-  (`gensol` package): boards, teams, solutions, code generation.
+  (`gensol` package): boards, teams, solutions, code generation, and an
+  agent tool surface (`/api/agent/tools`, `/tools/call`) — ADR 003.
 - **web-app** — React SPA (CRA) consuming the APIs; yarn-based.
 - **vscode-extension** — minimal TS extension scaffold.
 - **cli-tool** — bash scaffolding commands for solutions/projects/
