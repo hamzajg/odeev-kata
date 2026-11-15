@@ -27,8 +27,11 @@ odeev-kata/
 
 - **web-apis** — Spring Boot on port **8081**; spring-ai-ollama for AI
   generation, springdoc-openapi for API docs. PoC code generator
-  (`gensol` package): boards, teams, solutions, code generation, and an
-  agent tool surface (`/api/agent/tools`, `/tools/call`) — ADR 003.
+  (`gensol` package): boards, teams, solutions, projects, diagrams, code
+  generation, and an agent tool surface (`/api/agent/tools`,
+  `/tools/call`) — ADR 003. All five resources share `ResourceStore<T>`
+  (server ids, `GET/PUT/DELETE /{id}`, parent validation, no cascade —
+  ADR 0002, spec `specs/resource-lifecycle/`).
 - **web-app** — React SPA (CRA) consuming the APIs; yarn-based.
 - **vscode-extension** — minimal TS extension scaffold.
 - **cli-tool** — bash scaffolding commands for solutions/projects/
