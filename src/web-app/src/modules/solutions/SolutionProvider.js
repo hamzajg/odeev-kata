@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {SolutionService} from "./SolutionService";
 import {Utilities} from "../../utilities/Utillties";
 
@@ -15,16 +14,24 @@ const SolutionProvider = ({ children }) => {
         localStorage.setItem('solutions', JSON.stringify(solutions ?? []));
     }, [solutions]);
 
-    const addSolution = (newSolution) => {
-        newSolution.id = uuidv4();
-        setSolutions([...solutions, newSolution]);
-        SolutionService.postSolution(newSolution)
-    };
-
-    useEffect(() => {
+    const refreshSolutions = () => {
         SolutionService.fetchSolutions()
             .then(data => setSolutions(data ?? []));
-    }, []);
+    };
+
+    useEffect(refreshSolutions, []);
+
+    const addSolution = (newSolution) => {
+        SolutionService.postSolution(newSolution).then(refreshSolutions);
+    };
+
+    const updateSolution = (id, updatedSolution) => {
+        SolutionService.updateSolution(id, updatedSolution).then(refreshSolutions);
+    };
+
+    const removeSolution = (id) => {
+        SolutionService.deleteSolution(id).then(refreshSolutions);
+    };
 
     const findSolutionById = (id) => {
         return solutions.find(solution => solution.id === id);
@@ -72,6 +79,8 @@ const SolutionProvider = ({ children }) => {
     const value = {
         solutions,
         addSolution,
+        updateSolution,
+        removeSolution,
         findSolutionById,
         handleSaveMetadata,
         handleGenerateProject

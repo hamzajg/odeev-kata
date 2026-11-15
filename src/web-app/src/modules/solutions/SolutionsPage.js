@@ -7,17 +7,33 @@ import domains from "./Domains.json"
 
 const SolutionsPage = () => {
     const [showRightPanel, setShowRightPanel] = useState(false);
-    const {addSolution, solutions} = useContext(SolutionContext);
+    const {addSolution, updateSolution, removeSolution, solutions} = useContext(SolutionContext);
+    const [editingSolution, setEditingSolution] = useState(null);
     const [formData, setFormData] = useState({id: '', name: '', description: '', domain: ''});
+    const resetForm = () => {
+        setFormData({id: '', name: '', description: '', domain: ''});
+        setEditingSolution(null);
+    };
+
     const handleAddSolution = () => {
+        resetForm();
+        setShowRightPanel(true);
+    };
+
+    const handleEditSolution = (solution) => {
+        setEditingSolution(solution);
+        setFormData({...solution});
         setShowRightPanel(true);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        addSolution(formData);
-        setFormData({id: '', name: '', description: '', domain: ''});
+        if (editingSolution) {
+            updateSolution(editingSolution.id, {...formData, id: editingSolution.id});
+        } else {
+            addSolution(formData);
+        }
+        resetForm();
         setShowRightPanel(false);
     };
 
@@ -46,7 +62,8 @@ const SolutionsPage = () => {
                             <Table.Cell>{domains.find(d => d.id == solution.domain).name}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex flex-wrap gap-2">
-                                    <Button color="blue">Edit</Button>
+                                    <Button color="blue" onClick={() => handleEditSolution(solution)}>Edit</Button>
+                                    <Button color="red" onClick={() => removeSolution(solution.id)}>Remove</Button>
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -54,7 +71,7 @@ const SolutionsPage = () => {
                 </Table.Body>
             </Table>
 
-            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Solution">
+            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header={editingSolution ? "Edit Solution" : "Create Solution"}>
                 <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
                     <div>
                         <div className="mb-2 block">
@@ -104,7 +121,7 @@ const SolutionsPage = () => {
                         </Select>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
-                        <Button type="submit">Create Solution</Button>
+                        <Button type="submit">{editingSolution ? "Save" : "Create Solution"}</Button>
                     </div>
                 </form>
             </Drawer>

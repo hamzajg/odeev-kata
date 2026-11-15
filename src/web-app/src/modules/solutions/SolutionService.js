@@ -1,7 +1,9 @@
 const SolutionService = {
     postSolution,
     fetchSolutions,
-    callSwaggerCodeGen
+    callSwaggerCodeGen,
+    updateSolution,
+    deleteSolution
 }
 
 async function postSolution(newSolution) {
@@ -56,6 +58,36 @@ async function callSwaggerCodeGen(metadata) {
         }
     } catch (error) {
         console.error('Error generating project:', error);
+    }
+}
+
+
+async function updateSolution(id, updatedSolution) {
+    try {
+        const response = await fetch(`http://localhost:8081/solutions/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(updatedSolution),
+        });
+        if (response.ok) {
+            return await response.json();
+        }
+        console.error('Error updating solution:', response.statusText);
+    } catch (error) {
+        console.error('Error updating solution:', error);
+    }
+}
+
+async function deleteSolution(id) {
+    try {
+        const response = await fetch(`http://localhost:8081/solutions/${id}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            console.error('Error deleting solution:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error deleting solution:', error);
     }
 }
 

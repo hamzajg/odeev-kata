@@ -6,21 +6,38 @@ import Multiselect from 'multiselect-react-dropdown';
 
 const TeamsPage = () => {
     const [showRightPanel, setShowRightPanel] = useState(false);
-    const {addTeam, teams} = useContext(TeamContext);
+    const {addTeam, updateTeam, removeTeam, teams} = useContext(TeamContext);
+    const [editingTeam, setEditingTeam] = useState(null);
     const [formData, setFormData] = useState({id: '', name: '', description: '', guild: '', members: []});
     const [options, setOptions] = useState([{name: "Hamza Jguerim", id: 1}, {name: "Joe Doe", id: 2}]);
     const [selectedValues, setSelectedValues] = useState([]);
 
+    const resetForm = () => {
+        setFormData({id: '', name: '', description: '', guild: '', members: []});
+        setSelectedValues([]);
+        setEditingTeam(null);
+    };
+
     const handleAddTeam = () => {
+        resetForm();
+        setShowRightPanel(true);
+    };
+
+    const handleEditTeam = (team) => {
+        setEditingTeam(team);
+        setFormData({...team, members: team.members ?? []});
+        setSelectedValues(team.members ?? []);
         setShowRightPanel(true);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        addTeam(formData);
-        setFormData({id: '', name: '', description: '', guild: '', members: []});
-        setSelectedValues([])
+        if (editingTeam) {
+            updateTeam(editingTeam.id, {...formData, id: editingTeam.id});
+        } else {
+            addTeam(formData);
+        }
+        resetForm();
         setShowRightPanel(false);
     };
 
@@ -52,8 +69,8 @@ const TeamsPage = () => {
                             <Table.Cell>{team.members.map(item => item.name + ", ")}</Table.Cell>
                             <Table.Cell>
                                 <div className="flex flex-wrap gap-2">
-                                    <Button color="blue">Edit</Button>
-                                    <Button color="red">Remove</Button>
+                                    <Button color="blue" onClick={() => handleEditTeam(team)}>Edit</Button>
+                                    <Button color="red" onClick={() => removeTeam(team.id)}>Remove</Button>
                                 </div>
                             </Table.Cell>
                         </Table.Row>
@@ -62,7 +79,7 @@ const TeamsPage = () => {
                 </Table.Body>
             </Table>
 
-            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header="Create Team">
+            <Drawer isOpen={showRightPanel} setIsOpen={setShowRightPanel} header={editingTeam ? "Edit Team" : "Create Team"}>
                 <form onSubmit={handleSubmit} className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
                     <div>
                         <div className="mb-2 block">
@@ -125,7 +142,7 @@ const TeamsPage = () => {
                             }}/>
                     </div>
                     <div style={{display: 'flex', justifyContent: 'flex-end', marginTop: '1rem'}}>
-                        <Button type="submit">Create Team</Button>
+                        <Button type="submit">{editingTeam ? "Save" : "Create Team"}</Button>
                     </div>
                 </form>
             </Drawer>

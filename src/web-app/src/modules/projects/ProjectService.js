@@ -1,6 +1,8 @@
 const ProjectService = {
     postProject,
-    fetchProjects
+    fetchProjects,
+    updateProject,
+    deleteProject
 }
 
 async function postProject(newProject){
@@ -34,6 +36,37 @@ async function fetchProjects(){
         }
     } catch (error) {
         console.error('Error fetching projects:', error);
+    }
+}
+
+
+
+async function updateProject(id, updatedProject) {
+    try {
+        const response = await fetch(`http://localhost:8081/projects/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(updatedProject),
+        });
+        if (response.ok) {
+            return await response.json();
+        }
+        console.error('Error updating project:', response.statusText);
+    } catch (error) {
+        console.error('Error updating project:', error);
+    }
+}
+
+async function deleteProject(id) {
+    try {
+        const response = await fetch(`http://localhost:8081/projects/${id}`, {
+            method: 'DELETE',
+        });
+        if (!response.ok) {
+            console.error('Error deleting project:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error deleting project:', error);
     }
 }
 

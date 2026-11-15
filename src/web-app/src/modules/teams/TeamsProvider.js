@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {TeamService} from "./TeamService";
 
 const TeamContext = createContext();
@@ -14,25 +13,29 @@ const TeamProvider = ({ children }) => {
         localStorage.setItem('teams', JSON.stringify(teams ?? []));
     }, [teams]);
 
-    const addTeam = (newTeam) => {
-        newTeam.id = uuidv4();
-        setTeams([...teams, newTeam]);
-        TeamService.postTeam(newTeam)
-    };
-
-    useEffect(() => {
+    const refreshTeams = () => {
         TeamService.fetchTeams()
             .then(data => setTeams(data ?? []));
-    }, []);
+    };
+
+    useEffect(refreshTeams, []);
+
+    const addTeam = (newTeam) => {
+        TeamService.postTeam(newTeam).then(refreshTeams);
+    };
+
+    const updateTeam = (id, updatedTeam) => {
+        TeamService.updateTeam(id, updatedTeam).then(refreshTeams);
+    };
 
     const removeTeam = (id) => {
-        const updatedTeams = teams.filter((team) => team.id !== id);
-        setTeams(updatedTeams);
+        TeamService.deleteTeam(id).then(refreshTeams);
     };
 
     const value = {
         teams,
         addTeam,
+        updateTeam,
         removeTeam
     };
 
