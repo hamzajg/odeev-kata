@@ -1,0 +1,29 @@
+{
+  "feature": "resource-lifecycle",
+  "status": "running",
+  "iterations": 0,
+  "updated": "2026-11-16T14:59:39Z",
+  "waves": {
+    "1": {
+      "status": "done",
+      "branch": "feat/resource-lifecycle-w1",
+      "pr": "#7",
+      "evidence": "Full CRUD + hierarchy validation shipped via PR #7 (merged): ResourceStore<T>, server ids, GET/PUT/DELETE /{id}, parent ",
+      "updated": "2026-11-16T14:59:37Z"
+    },
+    "2": {
+      "status": "done",
+      "branch": "feat/resource-lifecycle-w2",
+      "pr": "#8",
+      "evidence": "UI mutations wired to API shipped via PR #8 (merged): delete*/update*/getById services, providers call API, deletes/edit",
+      "updated": "2026-11-16T14:59:39Z"
+    }
+  },
+  "gates": {},
+  "events": [
+    "2026-11-16T14:59:37Z start wave 1 on feat/resource-lifecycle-w1",
+    "2026-11-16T14:59:37Z complete wave 1 (#7): Full CRUD + hierarchy validation shipped via PR #7 (merged): ResourceStore<T>, server ids, GET/PUT/DELETE /{id}, parent ",
+    "2026-11-16T14:59:38Z start wave 2 on feat/resource-lifecycle-w2",
+    "2026-11-16T14:59:39Z complete wave 2 (#8): UI mutations wired to API shipped via PR #8 (merged): delete*/update*/getById services, providers call API, deletes/edit"
+  ]
+}
