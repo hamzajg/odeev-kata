@@ -3,10 +3,10 @@ package com.hamzajg.odeev.kata.poc.gensol;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.springframework.ai.chat.ChatResponse;
-import org.springframework.ai.chat.Generation;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.model.Generation;
 import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.ollama.OllamaChatClient;
+import org.springframework.ai.ollama.OllamaChatModel;
 
 import java.util.List;
 import java.util.Map;
@@ -17,14 +17,14 @@ import static org.mockito.Mockito.*;
 
 class AgentToolRegistryTest {
 
-    private OllamaChatClient chatClient;
+    private OllamaChatModel chatClient;
     private AgentToolRegistry registry;
 
     @BeforeEach
     void setUp() {
-        chatClient = mock(OllamaChatClient.class);
+        chatClient = mock(OllamaChatModel.class);
         when(chatClient.call(any(Prompt.class))).thenReturn(
-                new ChatResponse(List.of(new Generation("llm-output"))));
+                new ChatResponse(List.of(new Generation(new org.springframework.ai.chat.messages.AssistantMessage("llm-output")))));
         registry = new AgentToolRegistry(chatClient);
     }
 

@@ -8,7 +8,7 @@ Current-state map. Descriptive, not aspirational; see `docs/adr/` and
 ```
 odeev-kata/
 ├── src/
-│   ├── web-apis/          Spring Boot 3.2.4 REST API (Java/Gradle)
+│   ├── web-apis/          Spring Boot 3.5.16 REST API (Java/Gradle)
 │   │   └── src/main/java/com/hamzajg/odeev/kata/poc/gensol/
 │   │       ├── *Controller.java   Board, Team, Solution, CodeGenerator,
 │   │       │                      AgentTool (/api/agent/tools*)
