@@ -32,7 +32,7 @@ Verified 2026-11-13 against CI (`.github/workflows/ci.yml`, two jobs).
 
 ```
 src/
-  web-apis/          Spring Boot 3.2.4 REST API (Java, Gradle)
+  web-apis/          Spring Boot 3.5.16 REST API (Java, Gradle)
                      spring-ai-ollama starter, springdoc-openapi,
                      port 8081; controllers: Board, Team, Solution,
                      Project, Diagram, CodeGenerator, AgentTool
@@ -74,7 +74,7 @@ consumed by `web-app` / `vscode-extension` / `cli-tool`.
 ## Landmines
 
 - **Default branch is `main`, not `master`.**
-- `web-apis` needs **JDK 17+** (Spring Boot 3.x) — not the JDK 8 used by
+- `web-apis` needs **JDK 25** (Spring Boot 3.5) — not the JDK 8 used by
   sibling Android repos.
 - `web-app` uses **yarn** (`yarn install --immutable` in CI) and CRA —
   `npm install` may work but isn't what CI verifies.

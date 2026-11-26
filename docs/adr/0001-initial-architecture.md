@@ -19,7 +19,7 @@ not a finished product.
    generating code from domain primitives upward rather than top-down
    templates. Rationale: solutions compose better when built from
    reusable domain/application-service pieces.
-3. **Spring Boot 3 + spring-ai-ollama for generation.** `web-apis`
+3. **Spring Boot 3.5 + spring-ai-ollama 1.1 for generation.** `web-apis`
    (port 8081) hosts the PoC code generator with an Ollama-backed AI
    starter. Rationale: Spring ecosystem maturity + local-model AI keeps
    the PoC self-hostable.
