@@ -30,6 +30,8 @@ jobs:
 
       # Docs and Dockerfiles are allowed to claim Java 25 only; CI pins it.
       - name: Docs claim Java 25
+        # This job builds from src/web-apis; the guard scans the repo root.
+        working-directory: ${{ github.workspace }}
         run: bash .github/scripts/check-java-version-docs.sh
 
   web-app:
